@@ -1,0 +1,94 @@
+:root {
+    /* Paleta mantida do avançado */
+    --primary-color: #61dafb;
+    --primary-dark: #21a1f1;
+    --primary-light: #a6e1fa;
+    --primary-gradient: linear-gradient(135deg, #61dafb 0%, #21a1f1 100%);
+  
+    /* Fundos */
+    --bg-dark: #1e1e2f;
+    --bg-darker: #141421;
+    --bg-medium: #2a2a3d;
+    --bg-light: #3c3c55;
+    --bg-lighter: #4e4e70;
+  
+    /* Texto */
+    --text-primary: #ffffff;
+    --text-secondary: #d1d5db;
+    --text-accent: #61dafb;
+    --text-muted: #9ca3af;
+  }
+  
+  /* === Base === */
+  body {
+    font-family: 'Poppins', sans-serif;
+    background-color: var(--bg-dark);
+    color: var(--text-primary);
+    margin: 0;
+    padding: 0;
+  }
+  
+  /* === Gradiente e Hero Pattern === */
+  .gradient-bg {
+    background: var(--primary-gradient);
+  }
+  
+  .hero-pattern {
+    background-image: radial-gradient(circle at 50% 50%, rgba(56, 189, 248, 0.1) 0%, transparent 70%);
+  }
+  
+  /* === Links e Navegação === */
+  a {
+    color: var(--text-accent);
+    text-decoration: none;
+    transition: color 0.3s ease;
+  }
+  
+  .nav-link:hover,
+  a:hover {
+    color: var(--primary-light);
+  }
+  
+  /* === Botão === */
+  .btn-primary {
+    background: var(--primary-gradient);
+    padding: 0.75rem 1.5rem;
+    border: none;
+    border-radius: 0.5rem;
+    color: white;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+  
+  .btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 15px -3px rgba(59, 130, 246, 0.3);
+  }
+  
+  /* === Cards === */
+  .game-card {
+    background: var(--bg-medium);
+    border-radius: 0.75rem;
+    padding: 1rem;
+    transition: all 0.3s ease;
+  }
+  
+  .game-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.3);
+  }
+  
+  /* === Responsividade básica === */
+  @media (max-width: 768px) {
+    nav {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+  
+    .game-card {
+      padding: 0.75rem;
+    }
+  }
+  
