@@ -1,3 +1,4 @@
+
 /* ============================================================
    script.js — Funções interativas para o site GameLab
    ============================================================
@@ -13,7 +14,7 @@
 // =============================
 // 🌙 Alternar modo escuro/claro
 // =============================
-const themeToggle = document.getElementById("theme-toggle");
+/* const themeToggle = document.getElementById("theme-toggle");
 
 function setTheme(mode) {
   document.body.classList.toggle("dark-mode", mode === "dark");
@@ -103,3 +104,7 @@ if (searchInput) {
 // 🖼️ Feather icons
 // =============================
 feather.replace();
+
+*/
+
+

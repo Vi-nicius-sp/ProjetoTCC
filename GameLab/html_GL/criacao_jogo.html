@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GameLab Creator</title>
+
+    <style>
+        body {
+            background: #0d0d0f;
+            color: #ffffff;
+            font-family: Arial, Helvetica, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        h2 {
+            margin-bottom: 10px;
+        }
+
+        /* Container principal */
+        .container {
+            width: 90%;
+            max-width: 1100px;
+            margin: 30px auto;
+            padding: 20px;
+        }
+
+        /* Área do formulário */
+        .create-project {
+            background: #1b1b20;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 0 20px #000;
+        }
+
+        .form-project label {
+            display: block;
+            margin-top: 12px;
+            font-weight: bold;
+        }
+
+        .form-project input,
+        .form-project select,
+        .form-project textarea {
+            width: 100%;
+            padding: 10px;
+            border-radius: 8px;
+            border: none;
+            margin-top: 5px;
+            background: #2a2a31;
+            color: #ffffff;
+            font-size: 15px;
+        }
+
+        textarea {
+            resize: none;
+            height: 120px;
+        }
+
+        /* Botão */
+        .btn-submit {
+            margin-top: 20px;
+            width: 100%;
+            padding: 12px;
+            background: #6a00ff;
+            border: none;
+            color: #fff;
+            font-size: 18px;
+            cursor: pointer;
+            border-radius: 10px;
+            transition: 0.2s;
+        }
+
+        .btn-submit:hover {
+            background: #5400cc;
+        }
+
+        /* Galeria */
+        .gallery-section {
+            margin-top: 40px;
+        }
+
+        .gallery-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+            gap: 15px;
+            margin-top: 15px;
+        }
+
+        .gallery-item img {
+            width: 100%;
+            height: 130px;
+            object-fit: cover;
+            border-radius: 10px;
+            border: 2px solid #444;
+            box-shadow: 0 0 10px #000;
+        }
+
+        .preview-img {
+            width: 200px;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 12px;
+            margin-top: 10px;
+            border: 3px solid #6a00ff;
+        }
+    </style>
+</head>
+
+<body>
+<div class="container">
+
+    <!-- CRIAÇÃO DE PROJETO -->
+    <section class="create-project">
+        <h2>Criar Novo Projeto</h2>
+
+        <form class="form-project">
+
+            <!-- Nome -->
+            <label for="game-name">Nome do Jogo:</label>
+            <input type="text" id="game-name" placeholder="Ex.: Shadow Runner" required>
+
+            <!-- Gênero -->
+            <label for="game-genre">Gênero:</label>
+            <select id="game-genre" required>
+                <option value="">Selecione...</option>
+                <option>Ação</option>
+                <option>Aventura</option>
+                <option>RPG</option>
+                <option>Casual</option>
+                <option>Terror</option>
+                <option>Estratégia</option>
+                <option>Corrida</option>
+            </select>
+
+            <!-- Descrição -->
+            <label for="game-description">Descrição:</label>
+            <textarea id="game-description" placeholder="Descreva seu jogo..." required></textarea>
+
+            <!-- Tags -->
+            <label for="tags">Tags (separadas por vírgula):</label>
+            <input type="text" id="tags" placeholder="Ex.: pixel-art, retro, 2D">
+
+            <!-- Capa -->
+            <label for="main-image">Capa do Projeto:</label>
+            <input type="file" id="main-image" accept="image/*" required>
+            <img id="preview-main" class="preview-img" style="display:none;">
+
+            <!-- Galeria extra -->
+            <label for="gallery">Galeria (várias imagens):</label>
+            <input type="file" id="gallery" accept="image/*" multiple>
+
+            <!-- Botão -->
+            <button type="submit" class="btn-submit">Publicar Projeto</button>
+        </form>
+    </section>
+
+    <!-- GALERIA -->
+    <section class="gallery-section">
+        <h2>Galeria do Projeto</h2>
+        <div class="gallery-container" id="gallery-container"></div>
+    </section>
+
+</div>
+
+<script>
+    // Preview da capa principal
+    const mainInput = document.getElementById("main-image");
+    const previewMain = document.getElementById("preview-main");
+
+    mainInput.addEventListener("change", () => {
+        const file = mainInput.files[0];
+        if (file) {
+            previewMain.src = URL.createObjectURL(file);
+            previewMain.style.display = "block";
+        }
+    });
+
+    // Preview das imagens da galeria
+    const galleryInput = document.getElementById("gallery");
+    const galleryContainer = document.getElementById("gallery-container");
+
+    galleryInput.addEventListener("change", () => {
+        galleryContainer.innerHTML = ""; // limpa antes de adicionar
+
+        Array.from(galleryInput.files).forEach(file => {
+            const img = document.createElement("img");
+            img.src = URL.createObjectURL(file);
+
+            const div = document.createElement("div");
+            div.classList.add("gallery-item");
+            div.appendChild(img);
+
+            galleryContainer.appendChild(div);
+        });
+    });
+</script>
+
+</body>
+</html>

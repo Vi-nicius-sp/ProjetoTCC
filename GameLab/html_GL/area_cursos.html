@@ -1,220 +1,497 @@
 <!DOCTYPE html>
 <html lang="pt-BR" data-bs-theme="dark">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Área de Cursos | GameLab</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Área de Cursos • GameLab</title>
+  <meta name="description" content="Cursos práticos para criar jogos: programação, arte, design e engines. Incubadora para projetos com mentoria." />
 
-  <!-- CSS local (corrigido) -->
-  <link rel="stylesheet" href="style_home.css">
-
-  <!-- Tailwind (mantive, já que você usa) -->
-  <script src="https://cdn.tailwindcss.com"></script>
-
-  <!-- Bootstrap 5.3 (CSS) -->
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-
-  <!-- Feather icons -->
+  <!-- Fonts & Icons -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
   <script src="https://unpkg.com/feather-icons"></script>
 
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <!-- Bootstrap -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 
   <style>
-    body { font-family: "Poppins", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial; }
-    main { padding-top: 88px; } /* evita overlap com navbar fixa */
-    .card-dark { background-color: #0f1724; } /* ajuste visual */
-    .course-img { height: 12rem; object-fit: cover; }
+    :root{
+      --primary-500:#61dafb;
+      --primary-600:#21a1f1;
+      --bg-900:#07070b;
+      --surface:#0f1720;
+      --muted:#98a1b3;
+      --card:#0e1116;
+      --glass: rgba(255,255,255,0.03);
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family: 'Poppins', system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+      background: radial-gradient(1000px 300px at 10% 10%, rgba(33,161,241,0.04), transparent),
+                  linear-gradient(180deg,#05060a 0%, #07070b 100%);
+      color:#e6eef8;
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+      line-height:1.45;
+    }
+
+    a { color: var(--primary-500); text-decoration:none; }
+    a:hover { color: var(--primary-600); text-decoration:underline; }
+
+    /* NAV */
+    nav.navbar {
+      backdrop-filter: blur(6px);
+      background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(0,0,0,0.04));
+      border-bottom: 1px solid rgba(255,255,255,0.03);
+      padding: 0.6rem 1rem;
+    }
+    .brand {
+      display:flex; gap:0.6rem; align-items:center; font-weight:700; font-size:1.05rem;
+      background:linear-gradient(90deg,var(--primary-500),var(--primary-600));
+      -webkit-background-clip:text; background-clip:text; color:transparent;
+    }
+
+    main { padding-top: 88px; }
+
+    /* Header */
+    .page-hero {
+      max-width:1200px; margin: 1rem auto 2rem; padding:1.6rem;
+      display:flex; gap:1.2rem; align-items:center; justify-content:space-between;
+    }
+    .hero-card {
+      flex:1;
+      background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+      border-radius:12px; padding:1.4rem; border:1px solid rgba(255,255,255,0.03);
+      box-shadow: 0 8px 30px rgba(2,6,23,0.6);
+    }
+    .hero-visual {
+      width:380px; min-height:200px; border-radius:10px; overflow:hidden; border:1px solid rgba(255,255,255,0.03);
+      box-shadow: 0 12px 30px rgba(2,6,23,0.6);
+    }
+    .hero-visual img { width:100%; height:100%; object-fit:cover; display:block; }
+
+    .kicker { color:var(--primary-500); font-weight:600; font-size:0.9rem; display:inline-block; }
+
+    .btn-main {
+      background: linear-gradient(90deg,var(--primary-500),var(--primary-600));
+      color:#071223; border:none; padding:0.6rem 1rem; border-radius:10px; font-weight:600;
+      box-shadow: 0 10px 30px rgba(33,161,241,0.08);
+    }
+    .btn-ghost {
+      background:transparent; border:1px solid rgba(97,218,251,0.12); color:var(--primary-500); border-radius:10px; padding:0.55rem 0.9rem;
+    }
+
+    /* Filters / controls */
+    .controls { display:flex; gap:0.6rem; flex-wrap:wrap; align-items:center; margin-top:0.8rem; }
+
+    /* Courses grid */
+    .courses-wrap {
+      max-width:1200px; margin: 0 auto 2rem; padding:0 1.2rem;
+    }
+    .courses-grid {
+      display:grid; grid-template-columns: repeat(auto-fit,minmax(260px,1fr)); gap:1.1rem;
+    }
+    .course-card {
+      background: linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.015));
+      border-radius:12px; overflow:hidden; transition: transform .18s ease, box-shadow .18s ease;
+      border:1px solid rgba(255,255,255,0.03);
+    }
+    .course-card:hover { transform: translateY(-6px); box-shadow:0 18px 40px rgba(2,6,23,0.6); }
+    .course-card img { width:100%; height:150px; object-fit:cover; display:block; }
+    .course-body { padding:0.9rem; }
+    .course-title { font-weight:600; margin:0 0 0.25rem; }
+    .course-desc { color:var(--muted); font-size:0.94rem; margin-bottom:0.6rem; }
+    .chip { display:inline-block; padding:0.25rem .5rem; border-radius:999px; font-size:0.78rem; background: rgba(97,218,251,0.08); color:var(--primary-500); }
+
+    /* Sections */
+    .section { max-width:1200px; margin: 1.2rem auto; padding:1rem; }
+    .card-surface { background: linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.02)); border-radius:12px; border:1px solid rgba(255,255,255,0.03); padding:1rem; box-shadow: 0 8px 20px rgba(2,6,23,0.45); }
+
+    /* Footer */
+    footer { padding:2rem 1rem; text-align:center; color:var(--muted); border-top:1px solid rgba(255,255,255,0.03); margin-top:2rem; }
+
+    /* Responsive tweaks */
+    @media (max-width: 960px) {
+      .page-hero { flex-direction:column; gap:1rem; margin-top:84px; }
+      .hero-visual { width:100%; height:220px; }
+    }
   </style>
 </head>
-<body class="min-h-screen bg-slate-950 text-white">
+<body>
 
-  <!-- NAVBAR FIXA -->
-  <nav class="bg-slate-900 border-b border-gray-800 py-3 fixed-top" style="z-index:1030;">
-    <div class="container d-flex justify-content-between align-items-center">
+  <!-- NAVBAR -->
+  <nav class="navbar fixed-top">
+    <div class="container d-flex align-items-center justify-content-between">
       <div class="d-flex align-items-center gap-2">
-        <i data-feather="cpu" class="text-blue-400"></i>
-        <a href="index.html" class="fs-5 fw-bold text-decoration-none text-white">GameLab</a>
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" style="margin-right:6px">
+          <defs><linearGradient id="g2" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#61dafb"/><stop offset="1" stop-color="#21a1f1"/></linearGradient></defs>
+          <rect x="2" y="6" width="20" height="12" rx="2" fill="url(#g2)"/>
+          <path d="M7 9h10M7 12h10" stroke="#071223" stroke-width="1.2" stroke-linecap="round"/>
+        </svg>
+        <a href="index.html" class="brand">GameLab</a>
       </div>
 
-      <div class="d-none d-md-flex align-items-center gap-4">
-        <a href="index.html" class="text-gray-300 text-decoration-none">Início</a>
-        <a href="area_cursos.html" class="text-blue-400 fw-semibold text-decoration-none">Cursos</a>
-        <a href="cadastro.html" class="text-gray-300 text-decoration-none">Cadastro</a>
-        <a href="sobre_nos.html" class="text-gray-300 text-decoration-none">Sobre</a>
+      <div class="d-none d-md-flex align-items-center gap-3">
+        <a href="index.html" class="nav-link">Início</a>
+        <a href="area_cursos.html" class="nav-link">Cursos</a>
+        <a href="jogos.html" class="nav-link">Jogos</a>
+        <a href="sobre_nos.html" class="nav-link">Sobre</a>
       </div>
 
       <div class="d-flex align-items-center gap-2">
         <div class="d-none d-md-block">
           <div class="input-group">
-            <input id="searchInput" type="search" class="form-control form-control-sm" placeholder="Pesquisar cursos..." aria-label="Pesquisar cursos">
-            <button id="searchBtn" class="btn btn-primary btn-sm" type="button" aria-label="Pesquisar"><i data-feather="search"></i></button>
+            <input id="searchDesktop" class="form-control form-control-sm bg-transparent text-white" placeholder="Pesquisar cursos..." aria-label="Pesquisar">
+            <button id="btnSearch" class="btn btn-primary btn-sm"><i data-feather="search"></i></button>
           </div>
         </div>
 
-        <button id="themeToggle" class="btn btn-outline-secondary btn-sm me-2" title="Alternar tema" aria-label="Alternar tema">
-          <i id="themeIcon" data-feather="moon"></i>
-        </button>
+        <button id="themeToggle" class="btn btn-outline-secondary btn-sm" title="Alternar tema"><i id="themeIcon" data-feather="moon"></i></button>
+        <a href="cadastro.html" class="btn btn-main btn-sm ms-2">Matricular</a>
 
-        <button class="btn btn-ghost d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#mobileMenu" aria-controls="mobileMenu" aria-label="Abrir menu">
+        <button class="btn btn-ghost d-md-none ms-2" type="button" data-bs-toggle="offcanvas" data-bs-target="#mobileMenu">
           <i data-feather="menu"></i>
         </button>
       </div>
     </div>
   </nav>
 
-  <!-- OFFCANVAS MOBILE -->
-  <div class="offcanvas offcanvas-start text-bg-dark" tabindex="-1" id="mobileMenu" aria-labelledby="mobileMenuLabel">
+  <!-- Offcanvas mobile -->
+  <div class="offcanvas offcanvas-start text-bg-dark" tabindex="-1" id="mobileMenu">
     <div class="offcanvas-header">
-      <h5 id="mobileMenuLabel" class="offcanvas-title">Menu</h5>
-      <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Fechar"></button>
+      <h5 class="offcanvas-title">GameLab</h5>
+      <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas"></button>
     </div>
     <div class="offcanvas-body">
-      <div class="mb-3">
-        <div class="input-group">
-          <input id="searchInputOff" type="search" class="form-control form-control-sm" placeholder="Pesquisar cursos..." aria-label="Pesquisar cursos">
-          <button id="searchBtnOff" class="btn btn-primary btn-sm" type="button" aria-label="Pesquisar"><i data-feather="search"></i></button>
-        </div>
-      </div>
       <ul class="list-unstyled">
-        <li class="mb-2"><a href="index.html" class="text-white text-decoration-none">Início</a></li>
-        <li class="mb-2"><a href="area_cursos.html" class="text-white text-decoration-none">Cursos</a></li>
-        <li class="mb-2"><a href="cadastro.html" class="text-white text-decoration-none">Cadastro</a></li>
-        <li class="mb-2"><a href="sobre_nos.html" class="text-white text-decoration-none">Sobre</a></li>
+        <li class="py-2"><a href="index.html" class="text-white">Início</a></li>
+        <li class="py-2"><a href="area_cursos.html" class="text-white">Cursos</a></li>
+        <li class="py-2"><a href="jogos.html" class="text-white">Jogos</a></li>
+        <li class="py-2"><a href="sobre_nos.html" class="text-white">Sobre</a></li>
       </ul>
     </div>
   </div>
 
-  <main class="container py-5">
+  <!-- HERO HEADER -->
+  <main>
+    <div class="page-hero">
+      <div class="hero-card">
+        <span class="kicker">CATÁLOGO • GAME LAB</span>
+        <h1 style="margin:0.5rem 0 0.6rem; font-size:1.7rem;">Cursos práticos para desenvolver e publicar jogos</h1>
+        <p style="margin:0;color:var(--muted)">Aprenda com foco em projetos: aulas curtas, exercícios aplicados e mentorias. Perfeito para quem quer transformar protótipos em produtos.</p>
 
-    <!-- Cabeçalho -->
-    <header class="text-center mb-8">
-      <h1 class="text-4xl font-bold mb-2">Área de Cursos</h1>
-      <p class="text-gray-300 max-w-2xl mx-auto">Escolha seu próximo passo no mundo do desenvolvimento de jogos.</p>
-    </header>
+        <div class="controls">
+          <div class="form-check form-check-inline">
+            <input class="form-check-input level-filter" type="checkbox" id="fIni" value="iniciante">
+            <label class="form-check-label" for="fIni">Iniciante</label>
+          </div>
+          <div class="form-check form-check-inline">
+            <input class="form-check-input level-filter" type="checkbox" id="fInt" value="intermediario">
+            <label class="form-check-label" for="fInt">Intermediário</label>
+          </div>
+          <div class="form-check form-check-inline">
+            <input class="form-check-input level-filter" type="checkbox" id="fAdv" value="avancado">
+            <label class="form-check-label" for="fAdv">Avançado</label>
+          </div>
 
-    <!-- Filtros simples + grid -->
-    <div class="d-flex flex-column flex-md-row justify-content-between align-items-start gap-4 mb-4">
-      <div class="d-flex gap-2 align-items-center">
-        <button class="btn btn-outline-primary d-none d-md-inline" type="button" data-bs-toggle="collapse" data-bs-target="#filterPanel" aria-expanded="false">Filtros</button>
-        <div class="collapse" id="filterPanel">
-          <div class="card card-dark p-3">
-            <div class="mb-2"><strong>Nível</strong></div>
-            <div class="form-check form-check-inline">
-              <input class="form-check-input level-filter" type="checkbox" id="lvlIniciante" value="iniciante">
-              <label class="form-check-label" for="lvlIniciante">Iniciante</label>
-            </div>
-            <div class="form-check form-check-inline">
-              <input class="form-check-input level-filter" type="checkbox" id="lvlInter" value="intermediario">
-              <label class="form-check-label" for="lvlInter">Intermediário</label>
-            </div>
-            <div class="form-check form-check-inline">
-              <input class="form-check-input level-filter" type="checkbox" id="lvlAvanc" value="avancado">
-              <label class="form-check-label" for="lvlAvanc">Avançado</label>
-            </div>
+          <select id="categorySelect" class="form-select form-select-sm ms-2" style="width:auto;">
+            <option value="">Todas as áreas</option>
+            <option value="programacao">Programação</option>
+            <option value="arte">Arte & Assets</option>
+            <option value="design">Game Design</option>
+            <option value="engine">Engines</option>
+            <option value="producao">Produção</option>
+          </select>
+
+          <div class="ms-auto d-flex gap-2">
+            <a href="#apply" class="btn btn-main btn-sm">Entrar na Incubadora</a>
+            <a href="cadastro.html" class="btn btn-ghost btn-sm">Matricular</a>
           </div>
         </div>
       </div>
 
-      <div class="d-flex gap-2">
-        <a href="cadastro.html" class="btn btn-primary">Matricular-se</a>
+      <div class="hero-visual">
+        <img src="https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&w=1400&q=80" alt="Visual GameLab">
       </div>
     </div>
 
-    <!-- GRID DE CURSOS -->
-    <section class="grid grid-cols-1 md:grid-cols-3 gap-8" id="coursesGrid">
-      <!-- Curso 1 -->
-      <article id="curso-1" class="bg-slate-800 rounded-xl overflow-hidden shadow-lg course-item" data-level="iniciante" data-title="Unity para Iniciantes">
-        <img src="https://images.unsplash.com/photo-1551103782-8ab07afd45c1?auto=format&fit=crop&w=900&q=80" alt="Unity" class="w-full course-img">
-        <div class="p-6">
-          <h3 class="text-xl font-semibold mb-2 card-title">Unity para Iniciantes <span class="badge bg-success ms-2">Iniciante</span></h3>
-          <p class="text-gray-400 text-sm mb-4 card-desc">Projeto guiado para criar um jogo completo em 2D.</p>
-          <div class="d-flex justify-content-between items-center">
-            <div><span class="badge bg-info">Unity</span> <span class="badge bg-secondary">C#</span></div>
-            <div class="d-flex gap-2">
-              <button class="btn btn-outline-light btn-sm" data-bs-toggle="modal" data-bs-target="#courseModal" data-course='{"title":"Unity para Iniciantes","desc":"Projeto guiado para criar um jogo completo em 2D.","level":"Iniciante"}'>Detalhes</button>
-              <a href="cadastro.html" class="btn btn-primary btn-sm">Matricular</a>
-            </div>
+    <!-- WHY LEARN -->
+    <section class="section">
+      <div class="card-surface">
+        <div class="row align-items-center">
+          <div class="col-md-6">
+            <h3>Por que aprender na GameLab?</h3>
+            <p class="muted">Porque oferecemos ensino prático com foco em entregar produtos. Você não aprende só teoria: você constrói, testa e publica. Ideal para estudantes, equipes indie e quem quer começar na indústria.</p>
+            <ul class="muted">
+              <li>Trilhas curtas e hands-on</li>
+              <li>Mentoria com profissionais</li>
+              <li>Infraestrutura para testes e builds</li>
+              <li>Oportunidade de incubação para projetos selecionados</li>
+            </ul>
+          </div>
+          <div class="col-md-6 text-center">
+            <img src="https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=900&q=80" alt="Por que aprender" style="max-width:320px; border-radius:10px; border:1px solid rgba(255,255,255,0.03)">
           </div>
         </div>
-      </article>
-
-      <!-- Curso 2 -->
-      <article class="bg-slate-800 rounded-xl overflow-hidden shadow-lg course-item" data-level="intermediario" data-title="Pixel Art Essencial">
-        <img src="https://images.unsplash.com/photo-1626379618231-6e99f7d1f683?auto=format&fit=crop&w=900&q=80" alt="Pixel Art" class="w-full course-img">
-        <div class="p-6">
-          <h3 class="text-xl font-semibold mb-2 card-title">Pixel Art Essencial <span class="badge bg-warning text-dark ms-2">Intermediário</span></h3>
-          <p class="text-gray-400 text-sm mb-4 card-desc">Aprenda a criar sprites e assets com estilo retrô.</p>
-          <div class="d-flex justify-content-between items-center">
-            <div><span class="badge bg-secondary">Pixel Art</span></div>
-            <div class="d-flex gap-2">
-              <button class="btn btn-outline-light btn-sm" data-bs-toggle="modal" data-bs-target="#courseModal" data-course='{"title":"Pixel Art Essencial","desc":"Aprenda a criar sprites e assets com estilo retrô.","level":"Intermediário"}'>Detalhes</button>
-              <a href="cadastro.html" class="btn btn-primary btn-sm">Matricular</a>
-            </div>
-          </div>
-        </div>
-      </article>
-
-      <!-- Curso 3 -->
-      <article class="bg-slate-800 rounded-xl overflow-hidden shadow-lg course-item" data-level="avancado" data-title="Fundamentos de Game Design">
-        <img src="https://images.unsplash.com/photo-1590608897129-79da98d159ab?auto=format&fit=crop&w=900&q=80" alt="Game Design" class="w-full course-img">
-        <div class="p-6">
-          <h3 class="text-xl font-semibold mb-2 card-title">Fundamentos de Game Design <span class="badge bg-danger ms-2">Avançado</span></h3>
-          <p class="text-gray-400 text-sm mb-4 card-desc">Construa mecânicas divertidas e narrativas imersivas.</p>
-          <div class="d-flex justify-content-between items-center">
-            <div><span class="badge bg-secondary">Design</span></div>
-            <div class="d-flex gap-2">
-              <button class="btn btn-outline-light btn-sm" data-bs-toggle="modal" data-bs-target="#courseModal" data-course='{"title":"Fundamentos de Game Design","desc":"Construa mecânicas divertidas e narrativas imersivas.","level":"Avançado"}'>Detalhes</button>
-              <a href="cadastro.html" class="btn btn-primary btn-sm">Matricular</a>
-            </div>
-          </div>
-        </div>
-      </article>
+      </div>
     </section>
 
-    <!-- Paginação simples (placeholder) -->
-    <nav class="mt-6" aria-label="Paginação de cursos">
-      <ul class="pagination justify-content-center">
-        <li class="page-item disabled"><a class="page-link" href="#" tabindex="-1">Anterior</a></li>
-        <li class="page-item active"><a class="page-link" href="#">1</a></li>
-        <li class="page-item"><a class="page-link" href="#">2</a></li>
-        <li class="page-item"><a class="page-link" href="#">Próximo</a></li>
-      </ul>
-    </nav>
+    <!-- COURSES GRID -->
+    <section class="courses-wrap section">
+      <div class="d-flex justify-content-between align-items-center mb-3">
+        <h2 style="margin:0">Cursos Disponíveis</h2>
+        <p class="muted mb-0">Cursos práticos — clique em "Detalhes" para ver programa e se inscrever.</p>
+      </div>
+
+      <div class="courses-grid" id="coursesGrid">
+
+        <!-- COURSE 1 -->
+        <article class="course-card" data-level="iniciante" data-category="programacao" data-title="Introdução à Programação para Jogos">
+          <img src="https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&w=1200&q=80" alt="Introdução à Programação">
+          <div class="course-body">
+            <div style="display:flex; justify-content:space-between; align-items:center;">
+              <h3 class="course-title">Introdução à Programação para Jogos</h3>
+              <span class="chip">Iniciante</span>
+            </div>
+            <p class="course-desc">Conceitos básicos de lógica, variáveis e estruturas, aplicados para criar protótipos simples em Python e GDScript.</p>
+            <div class="d-flex justify-content-between align-items-center mt-2">
+              <div><span class="badge bg-secondary">Python</span> <span class="badge bg-secondary">GDScript</span></div>
+              <div class="d-flex gap-2">
+                <button class="btn btn-outline-light btn-sm btn-detail" data-bs-toggle="modal" data-bs-target="#courseModal" data-course='{"title":"Introdução à Programação para Jogos","desc":"Lógica, variáveis, controle de fluxo e prototipagem em Python e Godot.","level":"Iniciante","duration":"6 semanas","items":["Aulas em vídeo","Exercícios práticos","Projeto final"]}'>Detalhes</button>
+                <a href="cadastro.html" class="btn btn-main btn-sm">Matricular</a>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <!-- COURSE 2 -->
+        <article class="course-card" data-level="iniciante" data-category="arte" data-title="Pixel Art & Assets para Jogos">
+          <img src="https://images.unsplash.com/photo-1511512578047-dfb367046420?auto=format&fit=crop&w=1200&q=80" alt="Pixel Art">
+          <div class="course-body">
+            <div style="display:flex; justify-content:space-between; align-items:center;">
+              <h3 class="course-title">Pixel Art & Assets</h3>
+              <span class="chip">Iniciante</span>
+            </div>
+            <p class="course-desc">Criação de sprites, tilesets e animações frame-a-frame para jogos 2D.</p>
+            <div class="d-flex justify-content-between align-items-center mt-2">
+              <div><span class="badge bg-secondary">Aseprite</span></div>
+              <div class="d-flex gap-2">
+                <button class="btn btn-outline-light btn-sm btn-detail" data-bs-toggle="modal" data-bs-target="#courseModal" data-course='{"title":"Pixel Art & Assets","desc":"Sprites, tilesets, animações e otimização para jogos 2D.","level":"Iniciante","duration":"4 semanas","items":["Aulas práticas","Assets para portfólio"]}'>Detalhes</button>
+                <a href="cadastro.html" class="btn btn-main btn-sm">Matricular</a>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <!-- COURSE 3 -->
+        <article class="course-card" data-level="intermediario" data-category="design" data-title="Fundamentos de Game Design">
+          <img src="https://images.unsplash.com/photo-1590608897129-79da98d159ab?auto=format&fit=crop&w=1200&q=80" alt="Game Design">
+          <div class="course-body">
+            <div style="display:flex; justify-content:space-between; align-items:center;">
+              <h3 class="course-title">Fundamentos de Game Design</h3>
+              <span class="chip">Intermediário</span>
+            </div>
+            <p class="course-desc">Mecânicas, sistemas de jogo, balanceamento e prototipagem rápida para testar hipóteses de design.</p>
+            <div class="d-flex justify-content-between align-items-center mt-2">
+              <div><span class="badge bg-secondary">Design</span></div>
+              <div class="d-flex gap-2">
+                <button class="btn btn-outline-light btn-sm btn-detail" data-bs-toggle="modal" data-bs-target="#courseModal" data-course='{"title":"Fundamentos de Game Design","desc":"Mecânicas, balanceamento, protótipos e playtesting.","level":"Intermediário","duration":"6 semanas","items":["Workshops","Playtests dirigidos"]}'>Detalhes</button>
+                <a href="cadastro.html" class="btn btn-main btn-sm">Matricular</a>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <!-- COURSE 4 -->
+        <article class="course-card" data-level="intermediario" data-category="engine" data-title="Unity 2D: Do Protótipo ao Jogo">
+          <img src="https://images.unsplash.com/photo-1551103782-8ab07afd45c1?auto=format&fit=crop&w=1200&q=80" alt="Unity 2D">
+          <div class="course-body">
+            <div style="display:flex; justify-content:space-between; align-items:center;">
+              <h3 class="course-title">Unity 2D: Do Protótipo ao Jogo</h3>
+              <span class="chip">Intermediário</span>
+            </div>
+            <p class="course-desc">Pipeline de projeto em Unity, C#, animações e build para PC e WebGL.</p>
+            <div class="d-flex justify-content-between align-items-center mt-2">
+              <div><span class="badge bg-secondary">Unity</span> <span class="badge bg-secondary">C#</span></div>
+              <div class="d-flex gap-2">
+                <button class="btn btn-outline-light btn-sm btn-detail" data-bs-toggle="modal" data-bs-target="#courseModal" data-course='{"title":"Unity 2D: Do Protótipo ao Jogo","desc":"C# em Unity, físicas, UI e publicação WebGL/PC.","level":"Intermediário","duration":"8 semanas","items":["Projetos guiados","Entrega final"]}'>Detalhes</button>
+                <a href="cadastro.html" class="btn btn-main btn-sm">Matricular</a>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <!-- COURSE 5 -->
+        <article class="course-card" data-level="avancado" data-category="engine" data-title="Unreal & Blueprints (Introdução)">
+          <img src="https://images.unsplash.com/photo-1626379618231-6e99f7d1f683?auto=format&fit=crop&w=1200&q=80" alt="Unreal Blueprints">
+          <div class="course-body">
+            <div style="display:flex; justify-content:space-between; align-items:center;">
+              <h3 class="course-title">Unreal & Blueprints</h3>
+              <span class="chip">Avançado</span>
+            </div>
+            <p class="course-desc">Introdução ao visual scripting no Unreal Engine com foco em prototipagem rápida e gráficos.</p>
+            <div class="d-flex justify-content-between align-items-center mt-2">
+              <div><span class="badge bg-secondary">Unreal</span></div>
+              <div class="d-flex gap-2">
+                <button class="btn btn-outline-light btn-sm btn-detail" data-bs-toggle="modal" data-bs-target="#courseModal" data-course='{"title":"Unreal & Blueprints","desc":"Blueprints, level design e otimização para protótipos 3D.","level":"Avançado","duration":"8 semanas","items":["Hands-on","Pipeline 3D"]}'>Detalhes</button>
+                <a href="cadastro.html" class="btn btn-main btn-sm">Matricular</a>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <!-- COURSE 6 -->
+        <article class="course-card" data-level="iniciante" data-category="producao" data-title="Produção & Gestão de Projetos de Jogos">
+          <img src="https://images.unsplash.com/photo-1545239351-1141bd82e8a6?auto=format&fit=crop&w=1200&q=80" alt="Produção">
+          <div class="course-body">
+            <div style="display:flex; justify-content:space-between; align-items:center;">
+              <h3 class="course-title">Produção & Gestão</h3>
+              <span class="chip">Iniciante</span>
+            </div>
+            <p class="course-desc">Organização de equipe, sprints, pipelines e publicação. Ideal para quem lidera projetos.</p>
+            <div class="d-flex justify-content-between align-items-center mt-2">
+              <div><span class="badge bg-secondary">Gestão</span></div>
+              <div class="d-flex gap-2">
+                <button class="btn btn-outline-light btn-sm btn-detail" data-bs-toggle="modal" data-bs-target="#courseModal" data-course='{"title":"Produção & Gestão","desc":"Metodologias ágeis aplicadas a projetos de jogos e publicação.","level":"Iniciante","duration":"4 semanas","items":["Templates","Sprint planning"]}'>Detalhes</button>
+                <a href="cadastro.html" class="btn btn-main btn-sm">Matricular</a>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <!-- COURSE 7 -->
+        <article class="course-card" data-level="intermediario" data-category="arte" data-title="UI / UX para Jogos">
+          <img src="https://images.unsplash.com/photo-1526378721318-802b1c36d9d8?auto=format&fit=crop&w=1200&q=80" alt="UI UX">
+          <div class="course-body">
+            <div style="display:flex; justify-content:space-between; align-items:center;">
+              <h3 class="course-title">UI / UX para Jogos</h3>
+              <span class="chip">Intermediário</span>
+            </div>
+            <p class="course-desc">Design de interfaces, HUDs e fluxo de experiência do jogador com ferramentas práticas.</p>
+            <div class="d-flex justify-content-between align-items-center mt-2">
+              <div><span class="badge bg-secondary">Figma</span></div>
+              <div class="d-flex gap-2">
+                <button class="btn btn-outline-light btn-sm btn-detail" data-bs-toggle="modal" data-bs-target="#courseModal" data-course='{"title":"UI / UX para Jogos","desc":"Design de HUD, menus e fluxos de interação com foco em usabilidade.","level":"Intermediário","duration":"5 semanas","items":["Mockups","Prototipagem"]}'>Detalhes</button>
+                <a href="cadastro.html" class="btn btn-main btn-sm">Matricular</a>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <!-- COURSE 8 -->
+        <article class="course-card" data-level="avancado" data-category="design" data-title="Narrativa Interativa e Escrita para Jogos">
+          <img src="https://images.unsplash.com/photo-1495562569060-2eec283d3391?auto=format&fit=crop&w=1200&q=80" alt="Narrativa">
+          <div class="course-body">
+            <div style="display:flex; justify-content:space-between; align-items:center;">
+              <h3 class="course-title">Narrativa Interativa</h3>
+              <span class="chip">Avançado</span>
+            </div>
+            <p class="course-desc">Estrutura de histórias interativas, diálogos, ramificações e testes de impacto narrativo.</p>
+            <div class="d-flex justify-content-between align-items-center mt-2">
+              <div><span class="badge bg-secondary">Narrativa</span></div>
+              <div class="d-flex gap-2">
+                <button class="btn btn-outline-light btn-sm btn-detail" data-bs-toggle="modal" data-bs-target="#courseModal" data-course='{"title":"Narrativa Interativa","desc":"Estruturas narrativas, branching e design de diálogos.","level":"Avançado","duration":"6 semanas","items":["Templates","Playtest narrativo"]}'>Detalhes</button>
+                <a href="cadastro.html" class="btn btn-main btn-sm">Matricular</a>
+              </div>
+            </div>
+          </div>
+        </article>
+
+      </div>
+
+      <!-- Pagination (simple placeholder) -->
+      <div class="d-flex justify-content-center mt-4">
+        <nav aria-label="Paginação de cursos">
+          <ul class="pagination">
+            <li class="page-item disabled"><a class="page-link" href="#" tabindex="-1">Anterior</a></li>
+            <li class="page-item active"><a class="page-link" href="#">1</a></li>
+            <li class="page-item"><a class="page-link" href="#">2</a></li>
+            <li class="page-item"><a class="page-link" href="#">Próximo</a></li>
+          </ul>
+        </nav>
+      </div>
+    </section>
+
+    <!-- HOW IT WORKS / INCUBATOR PROMO -->
+    <section class="section">
+      <div class="card-surface">
+        <div class="row align-items-center">
+          <div class="col-md-6">
+            <h3>Trilhas & Incubação</h3>
+            <p class="muted">Além dos cursos, a GameLab seleciona projetos promissores para ciclos de incubação: mentoria, infraestrutura e apoio à publicação.</p>
+            <ul class="muted">
+              <li>Seleção por pitch / protótipo</li>
+              <li>Ciclos de 8–10 semanas</li>
+              <li>Mentoria técnica e de produto</li>
+            </ul>
+            <a href="#apply" class="btn btn-main btn-sm mt-2">Aplicar para Incubação</a>
+          </div>
+          <div class="col-md-6 text-center">
+            <img src="https://images.unsplash.com/photo-1504805572947-34fad45aed93?auto=format&fit=crop&w=900&q=80" alt="Incubadora" style="max-width:360px; border-radius:8px; border:1px solid rgba(255,255,255,0.03)">
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- QUICK FAQ -->
+    <section id="faq" class="section">
+      <div class="card-surface">
+        <h3>Perguntas rápidas</h3>
+        <div class="row">
+          <div class="col-md-6">
+            <p class="muted"><strong>Formato:</strong> Aulas em vídeo + exercícios práticos e projetos finais.</p>
+            <p class="muted"><strong>Certificado:</strong> Emitimos certificado digital de conclusão.</p>
+          </div>
+          <div class="col-md-6">
+            <p class="muted"><strong>Requisitos:</strong> Notebook com Unity/Godot instalado (dependendo do curso).</p>
+            <p class="muted"><strong>Suporte:</strong> Através de fórum e sessões ao vivo.</p>
+          </div>
+        </div>
+      </div>
+    </section>
 
   </main>
 
-  <!-- Modal de Detalhes do Curso -->
+  <!-- COURSE MODAL -->
   <div class="modal fade" id="courseModal" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-lg">
-      <div class="modal-content bg-slate-900 text-white">
+      <div class="modal-content" style="background:linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.02)); color:inherit; border-radius:12px;">
         <div class="modal-header">
-          <h5 id="courseModalTitle" class="modal-title">Curso</h5>
+          <h5 class="modal-title" id="courseModalTitle">Curso</h5>
           <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Fechar"></button>
         </div>
         <div class="modal-body">
-          <p id="courseModalDesc" class="text-muted"></p>
+          <p id="courseModalDesc" class="muted"></p>
           <p><strong>Nível:</strong> <span id="courseModalLevel" class="badge bg-info"></span></p>
+          <p><strong>Duração:</strong> <span id="courseModalDuration" class="muted"></span></p>
+          <div id="courseModalItems" style="margin-top:0.6rem;"></div>
         </div>
         <div class="modal-footer">
-          <a id="modalEnroll" href="cadastro.html" class="btn btn-primary">Matricular</a>
+          <a id="modalEnroll" href="cadastro.html" class="btn btn-main">Matricular</a>
           <button type="button" class="btn btn-outline-light" data-bs-dismiss="modal">Fechar</button>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- Footer -->
-  <footer class="bg-slate-900 py-8 border-t border-gray-800 text-center mt-6">
-    <p class="text-gray-500 mb-0">&copy; 2025 GameLab — Saimon.</p>
+  <!-- FOOTER -->
+  <footer>
+    <div class="container">
+      <div style="display:flex; justify-content:center; gap:1rem; margin-bottom:0.6rem;">
+        <a href="#" class="muted" style="color:var(--muted); text-decoration:none;">Política de Privacidade</a>
+        <a href="#" class="muted" style="color:var(--muted); text-decoration:none;">Termos</a>
+      </div>
+      <div style="color:var(--muted)">© 2025 GameLab — Incubadora de Projetos</div>
+    </div>
   </footer>
 
   <!-- SCRIPTS -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-  <script>feather.replace()</script>
+  <script>feather.replace();</script>
 
   <script>
     document.addEventListener('DOMContentLoaded', function () {
-      // Theme toggle + persistência
+      // Theme toggle
       const themeToggle = document.getElementById('themeToggle');
       const themeIcon = document.getElementById('themeIcon');
       const saved = localStorage.getItem('gamelab-theme');
@@ -233,7 +510,7 @@
         feather.replace();
       });
 
-      // Modal: popula com dados do botão
+      // Course modal population
       var courseModalEl = document.getElementById('courseModal');
       courseModalEl.addEventListener('show.bs.modal', function (event) {
         var button = event.relatedTarget;
@@ -241,57 +518,58 @@
         try {
           var obj = JSON.parse(data);
         } catch (e) {
-          var obj = { title: 'Curso', desc: '', level: '' };
+          var obj = { title: 'Curso', desc: '', level: '', duration:'', items:[] };
         }
-        document.getElementById('courseModalTitle').textContent = obj.title;
-        document.getElementById('courseModalDesc').textContent = obj.desc;
-        document.getElementById('courseModalLevel').textContent = obj.level;
+        document.getElementById('courseModalTitle').textContent = obj.title || 'Curso';
+        document.getElementById('courseModalDesc').textContent = obj.desc || '';
+        document.getElementById('courseModalLevel').textContent = obj.level || '';
+        document.getElementById('courseModalDuration').textContent = obj.duration || '—';
+        var itemsEl = document.getElementById('courseModalItems');
+        itemsEl.innerHTML = '';
+        if (obj.items && obj.items.length) {
+          var ul = document.createElement('ul');
+          obj.items.forEach(i => {
+            var li = document.createElement('li');
+            li.textContent = i;
+            ul.appendChild(li);
+          });
+          itemsEl.appendChild(ul);
+        }
       });
 
-      // Busca (desktop + offcanvas)
-      const searchInput = document.getElementById('searchInput');
-      const searchBtn = document.getElementById('searchBtn');
-      const searchInputOff = document.getElementById('searchInputOff');
-      const searchBtnOff = document.getElementById('searchBtnOff');
-
-      function runSearch(value) {
-        const q = (value || '').trim().toLowerCase();
-        const items = Array.from(document.querySelectorAll('.course-item'));
-        items.forEach(item => {
-          const title = (item.getAttribute('data-title') || '').toLowerCase();
-          const descEl = item.querySelector('.card-desc');
-          const desc = descEl ? descEl.innerText.toLowerCase() : '';
-          item.style.display = (!q || title.includes(q) || desc.includes(q)) ? '' : 'none';
+      // Search
+      const searchDesktop = document.getElementById('searchDesktop');
+      const btnSearch = document.getElementById('btnSearch');
+      function runSearch(q) {
+        q = (q || '').trim().toLowerCase();
+        document.querySelectorAll('.course-card').forEach(card => {
+          const title = (card.getAttribute('data-title') || '').toLowerCase();
+          const desc = (card.querySelector('.course-desc') ? card.querySelector('.course-desc').innerText.toLowerCase() : '');
+          card.style.display = (!q || title.includes(q) || desc.includes(q)) ? '' : 'none';
         });
       }
+      btnSearch.addEventListener('click', () => runSearch(searchDesktop.value));
+      searchDesktop.addEventListener('keyup', (e) => { if (e.key === 'Enter') runSearch(searchDesktop.value); });
 
-      searchBtn.addEventListener('click', () => runSearch(searchInput.value));
-      searchInput.addEventListener('keyup', (e) => { if (e.key === 'Enter') runSearch(searchInput.value); });
-
-      if (searchBtnOff) {
-        searchBtnOff.addEventListener('click', () => {
-          runSearch(searchInputOff.value);
-          const off = bootstrap.Offcanvas.getInstance(document.getElementById('mobileMenu'));
-          if (off) off.hide();
+      // Category filter
+      const catSelect = document.getElementById('categorySelect');
+      catSelect.addEventListener('change', function () {
+        const val = this.value;
+        document.querySelectorAll('.course-card').forEach(card => {
+          const cat = card.getAttribute('data-category') || '';
+          card.style.display = (!val || cat === val) ? '' : 'none';
         });
-      }
-      if (searchInputOff) searchInputOff.addEventListener('keyup', (e) => { if (e.key === 'Enter') { runSearch(searchInputOff.value); const off = bootstrap.Offcanvas.getInstance(document.getElementById('mobileMenu')); if (off) off.hide(); } });
+      });
 
-      // Filtros por nível
-      document.querySelectorAll('.level-filter').forEach(el => el.addEventListener('change', function () {
+      // Level filters
+      document.querySelectorAll('.level-filter').forEach(ch => ch.addEventListener('change', function () {
         const checked = Array.from(document.querySelectorAll('.level-filter:checked')).map(i => i.value);
-        const items = Array.from(document.querySelectorAll('.course-item'));
-        items.forEach(item => {
-          const level = item.getAttribute('data-level') || '';
-          // se nenhum filtro marcado, mostra todos
-          if (!checked.length) { item.style.display = ''; return; }
-          item.style.display = checked.includes(level) ? '' : 'none';
+        document.querySelectorAll('.course-card').forEach(card => {
+          const level = card.getAttribute('data-level') || '';
+          if (!checked.length) { card.style.display = ''; return; }
+          card.style.display = checked.includes(level) ? '' : 'none';
         });
       }));
-
-      // Inicializa tooltips (se houver)
-      var t = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
-      t.forEach(function (el) { new bootstrap.Tooltip(el); });
     });
   </script>
 </body>

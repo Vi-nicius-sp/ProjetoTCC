@@ -1,279 +1,448 @@
 <!DOCTYPE html>
 <html lang="pt-BR" data-bs-theme="dark">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>GameLab | Portal do Conhecimento Gamer</title>
-  <meta name="description" content="Aprenda a criar jogos do zero com uma trilha direta e prática." />
-
-  <!-- CORREÇÃO: link correto para seu CSS local (se tiver) -->
-  <link rel="stylesheet" href="style_home.css">
-
-  <!-- Tailwind (você já usava) -->
-  <script src="https://cdn.tailwindcss.com"></script>
-
-  <!-- Bootstrap 5.3 (CSS) - adiciona componentes prontas e utilitários -->
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-
-  <!-- Feather icons -->
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>GameLab • Incubadora de Jogos</title>
+  <meta name="description" content="GameLab — incubadora de pequenos projetos de jogos: mentoring, infraestrutura e publicação." />
+  <link rel="stylesheet" href="introducao_GL.css">
+  <!-- Fonts & Icons -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
   <script src="https://unpkg.com/feather-icons"></script>
 
-  <!-- Google Font -->
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <!-- Bootstrap (JS bundle vai no final) -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 
   <style>
-    /* pequenas adaptações para integrar Tailwind + Bootstrap visualmente */
-    body { font-family: "Poppins", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial; }
-    /* shadow e efeito do hero */
-    .hero-glow { box-shadow: 0 10px 40px rgba(59,130,246,0.12); border-radius: 12px; }
-    /* ajuste para navbar fixa: evitar overlap com conteúdo */
-    main { padding-top: 88px; } /* ajuste conforme a altura real da navbar */
+    :root{
+      --primary-600:#21a1f1;
+      --primary-500:#61dafb;
+      --primary-700:#0e86d1;
+      --bg-dark:#0f1720;
+      --bg-surface:#11121a;
+      --muted:#98a1b3;
+      --glass: rgba(255,255,255,0.03);
+      --card:#151728;
+      --accent: linear-gradient(135deg,var(--primary-500),var(--primary-600));
+    }
+
+    /* Base */
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      font-family: 'Poppins', system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+      background: radial-gradient(1200px 400px at 10% 10%, rgba(33,161,241,0.06), transparent),
+                  linear-gradient(180deg,#05060a 0%, #0b0d11 100%);
+      color:#e6eef8;
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+      line-height:1.45;
+    }
+
+    a { color: var(--primary-500); text-decoration:none; }
+    a:hover { color: var(--primary-600); text-decoration:underline; }
+
+    /* NAV */
+    nav.navbar {
+      backdrop-filter: blur(6px);
+      background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(0,0,0,0.04));
+      border-bottom: 1px solid rgba(255,255,255,0.03);
+      padding: 0.6rem 1rem;
+    }
+    .brand {
+      display:flex; gap:0.6rem; align-items:center; font-weight:700; font-size:1.15rem;
+      background:linear-gradient(90deg,var(--primary-500),var(--primary-600));
+      -webkit-background-clip:text; background-clip:text; color:transparent;
+    }
+    .nav-link { color: #cbd6e8; }
+    .nav-link:hover { color: var(--primary-500); }
+
+    /* HERO */
+    .hero {
+      max-width:1200px; margin: 88px auto 2rem; padding:2.4rem;
+      display:grid; grid-template-columns: 1fr 520px; gap:2rem;
+      align-items:center;
+    }
+    .hero-card {
+      background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+      border-radius:14px; padding:2rem; box-shadow: 0 8px 30px rgba(2,6,23,0.6);
+      border: 1px solid rgba(255,255,255,0.03);
+    }
+    .kicker { color:var(--primary-500); font-weight:600; font-size:0.95rem; margin-bottom:0.6rem; display:inline-block; }
+    h1.display { font-size:2.2rem; margin:0 0 0.6rem; line-height:1.05; }
+    p.lead { color:var(--muted); margin:0 0 1rem; }
+
+    .hero-visual {
+      border-radius:12px; overflow:hidden; position:relative;
+      min-height:320px; box-shadow: 0 15px 40px rgba(2,6,23,0.6);
+      border:1px solid rgba(255,255,255,0.03);
+    }
+    .hero-visual img { width:100%; height:100%; object-fit:cover; display:block; filter:saturate(1.05) contrast(1.02); }
+
+    .cta-row { display:flex; gap:0.8rem; flex-wrap:wrap; margin-top:1rem; }
+    .btn-primary {
+      background:var(--primary-500); color:#071223; border:none; padding:0.7rem 1.05rem;
+      border-radius:10px; font-weight:600; box-shadow: 0 8px 20px rgba(33,161,241,0.12);
+    }
+    .btn-outline {
+      background:transparent; color:var(--primary-500);
+      border:1px solid rgba(97,218,251,0.12); border-radius:10px; padding:0.7rem 1rem;
+    }
+
+    /* Sections */
+    .section { max-width:1200px; margin: 1.5rem auto; padding:1.2rem; }
+    .grid-3 { display:grid; grid-template-columns: repeat(3,1fr); gap:1rem; }
+    .card {
+      background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+      border-radius:12px; padding:1.1rem; border:1px solid rgba(255,255,255,0.03);
+      box-shadow: 0 6px 18px rgba(2,6,23,0.55);
+    }
+    .card h3 { margin:0 0 0.5rem; font-size:1.05rem; }
+    .muted { color:var(--muted); font-size:0.95rem; }
+
+    /* Projects */
+    .projects-grid { display:grid; grid-template-columns: repeat(auto-fit,minmax(220px,1fr)); gap:1rem; margin-top:1rem; }
+    .project {
+      background: linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.015));
+      border-radius:12px; overflow:hidden; transition: transform .18s ease, box-shadow .18s ease;
+      border:1px solid rgba(255,255,255,0.03);
+    }
+    .project:hover { transform: translateY(-6px); box-shadow:0 18px 40px rgba(2,6,23,0.6); }
+    .project img { width:100%; height:140px; object-fit:cover; display:block; }
+    .project .meta { padding:0.8rem; }
+    .badge { display:inline-block; padding:0.25rem .5rem; border-radius:999px; font-size:0.78rem; background: rgba(33,161,241,0.12); color:var(--primary-500); }
+
+    /* FAQ */
+    .faq .q { font-weight:600; margin-bottom:0.2rem; }
+    .faq .a { color:var(--muted); margin-bottom:1rem; }
+
+    /* Footer */
+    footer { padding:2rem 1rem; text-align:center; color:var(--muted); border-top:1px solid rgba(255,255,255,0.03); margin-top:3rem; }
+
+    /* Responsive */
+    @media (max-width: 1000px){
+      .hero { grid-template-columns: 1fr; margin-top:78px; padding:1.2rem; }
+      .grid-3 { grid-template-columns: 1fr; }
+    }
   </style>
 </head>
-<body class="min-h-screen font-[Poppins] bg-slate-950 text-white">
+<body>
 
-  <!-- NAVBAR (Tailwind visual + Bootstrap Offcanvas para menu mobile) -->
-  <nav class="gradient-bg border-b border-gray-800 py-4 fixed-top bg-slate-900" style="z-index:1030;">
-    <div class="container mx-auto px-4 d-flex justify-content-between align-items-center">
+  <!-- NAVBAR -->
+  <nav class="navbar fixed-top">
+    <div class="container d-flex align-items-center justify-content-between">
       <div class="d-flex align-items-center gap-2">
-        <i data-feather="cpu" class="text-blue-400"></i>
-        <a class="text-xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-indigo-500 fs-4 text-decoration-none" href="index.html">GameLab</a>
+        <div class="brand">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" style="margin-right:6px">
+            <rect x="2" y="6" width="20" height="12" rx="2" fill="url(#g)"/>
+            <path d="M7 9h10M7 12h10" stroke="#071223" stroke-width="1.2" stroke-linecap="round"/>
+            <defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#61dafb"/><stop offset="1" stop-color="#21a1f1"/></linearGradient></defs>
+          </svg>
+          <a href="#" class="brand">GameLab</a>
+        </div>
+        <div class="d-none d-md-flex align-items-center ms-3">
+          <a href="#about" class="nav-link me-3">Sobre</a>
+          <a href="#programas" class="nav-link me-3">Programas</a>
+          <a href="#projetos" class="nav-link me-3">Projetos</a>
+        </div>
       </div>
 
-      <!-- menu desktop -->
-      <div class="d-none d-md-flex gap-4 align-items-center">
-        <a href="index.html" class="text-blue-400 fw-semibold text-decoration-none">Início</a>
-        <a href="area_cursos.html" class="text-gray-300 hover:text-blue-400 transition text-decoration-none">Área de Cursos</a>
-        <a href="curso_jogos.html" class="text-gray-300 hover:text-blue-400 transition text-decoration-none">Cursos de Jogos</a>
-        <a href="jogos.html" class="text-gray-300 hover:text-blue-400 transition text-decoration-none">Jogos</a>
-        <a href="cadastro.html" class="text-gray-300 hover:text-blue-400 transition text-decoration-none">Cadastro</a>
-        <a href="sobre_nos.html" class="text-gray-300 hover:text-blue-400 transition text-decoration-none">Sobre</a>
-      </div>
-
-      <!-- ações -->
-      <div class="d-flex align-items-center gap-3">
-        <a href="cadastro.html" class="btn btn-primary btn-sm">Matrícula</a>
-
-        <!-- Toggle de tema (usa data-bs-theme no <html>) -->
-        <button id="themeToggle" class="btn btn-outline-secondary btn-sm" title="Alternar tema" aria-label="Alternar tema">
+      <div class="d-flex align-items-center gap-2">
+        <button id="themeToggle" class="btn btn-outline-secondary btn-sm" title="Alternar tema">
           <i id="themeIcon" data-feather="moon"></i>
         </button>
-
-        <!-- botão de menu mobile - abre offcanvas Bootstrap -->
-        <button class="btn btn-ghost d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#mobileMenu" aria-controls="mobileMenu" aria-label="Abrir menu">
+        <a href="#apply" class="btn btn-primary btn-sm">Aplicar</a>
+        <!-- mobile menu trigger -->
+        <button class="btn btn-ghost d-md-none ms-2" type="button" data-bs-toggle="offcanvas" data-bs-target="#mobileMenu">
           <i data-feather="menu"></i>
         </button>
       </div>
     </div>
   </nav>
 
-  <!-- OFFCANVAS: menu mobile -->
-  <div class="offcanvas offcanvas-start text-bg-dark" tabindex="-1" id="mobileMenu" aria-labelledby="mobileMenuLabel">
+  <!-- offcanvas mobile -->
+  <div class="offcanvas offcanvas-start text-bg-dark" tabindex="-1" id="mobileMenu">
     <div class="offcanvas-header">
-      <h5 id="mobileMenuLabel" class="offcanvas-title">Menu</h5>
-      <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Fechar"></button>
+      <h5 class="offcanvas-title">GameLab</h5>
+      <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas"></button>
     </div>
     <div class="offcanvas-body">
       <ul class="list-unstyled">
-        <li class="mb-2"><a href="index.html" class="text-white text-decoration-none">Início</a></li>
-        <li class="mb-2"><a href="area_cursos.html" class="text-white text-decoration-none">Área de Cursos</a></li>
-        <li class="mb-2"><a href="curso_jogos.html" class="text-white text-decoration-none">Cursos de Jogos</a></li>
-        <li class="mb-2"><a href="jogos.html" class="text-white text-decoration-none">Jogos</a></li>
-        <li class="mb-2"><a href="cadastro.html" class="text-white text-decoration-none">Cadastro</a></li>
-        <li class="mb-2"><a href="sobre_nos.html" class="text-white text-decoration-none">Sobre</a></li>
+        <li><a href="#about" class="d-block py-2">Sobre</a></li>
+        <li><a href="#programas" class="d-block py-2">Programas</a></li>
+        <li><a href="#projetos" class="d-block py-2">Projetos</a></li>
+        <li><a href="#faq" class="d-block py-2">FAQ</a></li>
       </ul>
     </div>
   </div>
 
-  <main>
+  <!-- HERO -->
+  <header class="hero">
+    <div class="hero-card">
+      <span class="kicker">INCUBADORA DE PROJETOS</span>
+      <h1 class="display">GameLab — incubamos ideias e transformamos protótipos em jogos reais</h1>
+      <p class="lead">Apoiamos pequenas equipes e estudantes com mentoria, infraestrutura, publicação e visibilidade. Aqui você encontra apoio técnico, revisões de produto e rotas rápidas para publicar seu jogo.</p>
 
-    <!-- HERO com CAROUSEL (Bootstrap) -->
-    <section id="top" class="py-5">
-      <div class="container">
-        <div class="row align-items-center">
-          <div class="col-md-6 mb-4">
-            <h1 class="display-5 fw-bold">Curso de Criação de <span class="bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-indigo-500">Jogos</span></h1>
-            <p class="lead text-gray-300">Trilha objetiva, do zero ao seu primeiro jogo publicado.</p>
-            <div class="d-flex gap-3 mt-3">
-              <a href="cadastro.html" class="btn btn-primary btn-lg">Começar Agora</a>
-              <a href="area_cursos.html" class="btn btn-outline-primary btn-lg">Ver Cursos</a>
-            </div>
-          </div>
+      <div class="d-flex flex-wrap align-items-center cta-row">
+        <a href="#apply" class="btn-primary">Quero Inscrever meu Projeto</a>
+        <a href="#projetos" class="btn-outline">Ver Projetos Incubados</a>
+        <a href="#programas" class="btn-outline">Como Funciona</a>
+      </div>
 
-          <div class="col-md-6">
-            <div id="heroCarousel" class="carousel slide carousel-fade hero-glow" data-bs-ride="carousel" aria-label="Destaques do GameLab">
-              <div class="carousel-inner">
-                <div class="carousel-item active">
-                  <img src="https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&w=900&q=80" class="d-block w-100 rounded" alt="Gaming">
-                </div>
-                <div class="carousel-item">
-                  <img src="https://images.unsplash.com/photo-1511512578047-dfb367046420?auto=format&fit=crop&w=900&q=80" class="d-block w-100 rounded" alt="Programação">
-                </div>
-                <div class="carousel-item">
-                  <img src="https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=900&q=80" class="d-block w-100 rounded" alt="Design">
-                </div>
-              </div>
-              <button class="carousel-control-prev" type="button" data-bs-target="#heroCarousel" data-bs-slide="prev" aria-label="Anterior">
-                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                <span class="visually-hidden">Anterior</span>
-              </button>
-              <button class="carousel-control-next" type="button" data-bs-target="#heroCarousel" data-bs-slide="next" aria-label="Próximo">
-                <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                <span class="visually-hidden">Próximo</span>
-              </button>
-            </div>
+      <div style="display:flex; gap:0.8rem; margin-top:1.15rem; align-items:center;">
+        <div class="badge">Mentoria</div>
+        <div class="badge">Infraestrutura</div>
+        <div class="badge">Publicação</div>
+      </div>
+
+      <div style="margin-top:1.15rem; color:var(--muted); font-size:0.95rem;">
+        <strong>Próxima seleção:</strong> 10 de Dezembro • <strong>Vagas:</strong> 6 equipes
+      </div>
+    </div>
+
+    <div class="hero-visual">
+      <img src="https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&w=1400&q=80" alt="Visual GameLab">
+    </div>
+  </header>
+
+  <!-- ABOUT / HOW IT WORKS -->
+  <section id="about" class="section">
+    <div class="card">
+      <div class="row align-items-center">
+        <div class="col-md-6">
+          <h3>O que fazemos</h3>
+          <p class="muted">A GameLab é uma incubadora prática para projetos independentes e trabalhos estudantis. Oferecemos rota de desenvolvimento: mentoria com profissionais, suporte técnico (builds, testes), e auxílio na publicação e divulgação.</p>
+
+          <ul class="muted" style="padding-left:1rem;">
+            <li>Mentoria com profissionais da indústria</li>
+            <li>Ambiente de testes e servidores</li>
+            <li>Workshops e oficinas mensais</li>
+            <li>Suporte para lançamento e ASO</li>
+          </ul>
+        </div>
+
+        <div class="col-md-6">
+          <div style="padding:1rem; border-radius:10px; background:var(--glass); border:1px solid rgba(255,255,255,0.02);">
+            <h4 style="margin:0 0 0.4rem;">Quem pode aplicar?</h4>
+            <p class="muted" style="margin:0 0 0.6rem;">Equipes pequenas, projetos estudantis, protótipos com potencial e desenvolvedores solo que desejam apoio para transformar uma ideia em produto jogável.</p>
+            <a href="#apply" class="btn-primary" style="display:inline-block">Inscreva-se</a>
           </div>
         </div>
       </div>
-    </section>
+    </div>
+  </section>
 
-    <!-- Cursos em Destaque (Cards responsivos) -->
-    <section class="py-5">
-      <div class="container">
-        <div class="text-center mb-4">
-          <h2 class="h3 fw-bold">Nossos <span class="text-primary">Cursos</span> em Destaque</h2>
-          <p class="text-muted">Aprenda com os melhores profissionais da indústria de games</p>
-        </div>
+  <!-- PROGRAMAS / PROCESSO -->
+  <section id="programas" class="section">
+    <div class="text-center mb-3">
+      <h2 style="margin-bottom:0.4rem">Como funciona a incubação</h2>
+      <p class="muted">Trabalhamos por ciclos práticos: seleção → mentoria → prototipagem → lançamento.</p>
+    </div>
 
-        <div class="row g-4">
-          <!-- card exemplo 1 -->
-          <div class="col-12 col-md-6 col-lg-4">
-            <div class="card bg-slate-800 text-white h-100">
-              <img src="https://images.unsplash.com/photo-1551103782-8ab07afd45c1?auto=format&fit=crop&w=900&q=80" class="card-img-top" alt="Unity">
-              <div class="card-body">
-                <h5 class="card-title">Unity para Iniciantes</h5>
-                <p class="card-text text-muted small">Projeto guiado para criar um jogo completo em 2D. Sem enrolação.</p>
-                <div class="d-flex justify-content-between align-items-center mt-3">
-                  <a href="area_cursos.html#curso-1" class="link-primary">Detalhes</a>
-                  <a href="cadastro.html" class="btn btn-primary btn-sm">Matricular</a>
-                </div>
-              </div>
-            </div>
+    <div class="grid-3">
+      <div class="card">
+        <h3>Seleção</h3>
+        <p class="muted">Inscreva o projeto com um protótipo ou documento de design. Selecionamos projetos com potencial e comprometimento.</p>
+      </div>
+
+      <div class="card">
+        <h3>Mentoria</h3>
+        <p class="muted">Sessões com mentores (game design, programação, arte, som, negócios) e planejamento semanal de entregas.</p>
+      </div>
+
+      <div class="card">
+        <h3>Lançamento</h3>
+        <p class="muted">Apoio para publicar em plataformas web/PC, criação de páginas de loja, trailers e divulgação nos canais parceiros.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROJECTS -->
+  <section id="projetos" class="section">
+    <div class="d-flex justify-content-between align-items-center">
+      <div>
+        <h2 style="margin:0">Projetos incubados</h2>
+        <p class="muted" style="margin:0.2rem 0 0;">Pequenas equipes, grandes ideias — veja alguns dos trabalhos recentes.</p>
+      </div>
+      <div><a href="#apply" class="btn-outline">Inscrever Projeto</a></div>
+    </div>
+
+    <div class="projects-grid mt-3">
+      <!-- Project 1 -->
+      <div class="project">
+        <img src="https://images.unsplash.com/photo-1605902711622-cfb43c44367b?auto=format&fit=crop&w=1200&q=80" alt="Projeto A">
+        <div class="meta">
+          <div style="display:flex;justify-content:space-between;align-items:center;">
+            <strong>Dungeon Runner</strong>
+            <span class="badge">2D • Pixel</span>
           </div>
-
-          <!-- card exemplo 2 (duplicar/editar conforme necessário) -->
-          <div class="col-12 col-md-6 col-lg-4">
-            <div class="card bg-slate-800 text-white h-100">
-              <img src="https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=900&q=80" class="card-img-top" alt="Pixel Art">
-              <div class="card-body">
-                <h5 class="card-title">Pixel Art & Assets</h5>
-                <p class="card-text text-muted small">Crie sprites, tilesets e assets otimizado para jogos 2D.</p>
-                <div class="d-flex justify-content-between align-items-center mt-3">
-                  <a href="area_cursos.html#curso-2" class="link-primary">Detalhes</a>
-                  <a href="cadastro.html" class="btn btn-primary btn-sm">Matricular</a>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <!-- card exemplo 3 -->
-          <div class="col-12 col-md-6 col-lg-4">
-            <div class="card bg-slate-800 text-white h-100">
-              <img src="https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=900&q=80" class="card-img-top" alt="Game Design">
-              <div class="card-body">
-                <h5 class="card-title">Game Design Básico</h5>
-                <p class="card-text text-muted small">Conceitos, mecânicas e como prototipar suas ideias.</p>
-                <div class="d-flex justify-content-between align-items-center mt-3">
-                  <a href="area_cursos.html#curso-3" class="link-primary">Detalhes</a>
-                  <a href="cadastro.html" class="btn btn-primary btn-sm">Matricular</a>
-                </div>
-              </div>
-            </div>
-          </div>
-
-        </div>
-
-        <div class="text-center mt-4">
-          <a href="area_cursos.html" class="btn btn-outline-primary btn-lg">Ver Todos os Cursos</a>
+          <p class="muted" style="margin:0.5rem 0 0;">Plataforma com combate e níveis procedurais. Treated pela equipe PixelFox.</p>
         </div>
       </div>
-    </section>
 
-    <!-- Depoimentos (simples) -->
-    <section class="py-5 bg-slate-950">
-      <div class="container">
-        <div class="text-center mb-4">
-          <h2 class="h4 fw-bold">O que nossos <span class="text-primary">alunos</span> dizem</h2>
+      <!-- Project 2 -->
+      <div class="project">
+        <img src="https://images.unsplash.com/photo-1531497865149-5fb8c1f1f7a6?auto=format&fit=crop&w=1200&q=80" alt="Projeto B">
+        <div class="meta">
+          <div style="display:flex;justify-content:space-between;align-items:center;">
+            <strong>Sky Builder</strong>
+            <span class="badge">LowPoly • Construção</span>
+          </div>
+          <p class="muted" style="margin:0.5rem 0 0;">Construa ilhas flutuantes e compartilhe mundos com outros jogadores.</p>
+        </div>
+      </div>
+
+      <!-- Project 3 -->
+      <div class="project">
+        <img src="https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=1200&q=80" alt="Projeto C">
+        <div class="meta">
+          <div style="display:flex;justify-content:space-between;align-items:center;">
+            <strong>Neon Racer</strong>
+            <span class="badge">Corrida • 3D</span>
+          </div>
+          <p class="muted" style="margin:0.5rem 0 0;">Game jam que virou projeto, com mecânica tight e visão arcade retro-futurista.</p>
+        </div>
+      </div>
+
+      <!-- Project 4 (placeholder) -->
+      <div class="project">
+        <img src="https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=1200&q=80" alt="Projeto D">
+        <div class="meta">
+          <div style="display:flex;justify-content:space-between;align-items:center;">
+            <strong>Project Nova</strong>
+            <span class="badge">RPG • Prototipo</span>
+          </div>
+          <p class="muted" style="margin:0.5rem 0 0;">Protótipo experimental com foco em narrativa e escolhas significativas.</p>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- APPLY / FORM -->
+  <section id="apply" class="section">
+    <div class="card">
+      <div class="row">
+        <div class="col-lg-7">
+          <h3>Inscreva seu projeto</h3>
+          <p class="muted">Preencha o formulário abaixo com as informações básicas. A seleção é simples — envie um pitch curto, um protótipo (link) ou screenshots.</p>
+          <ul class="muted">
+            <li>Duração da incubação: 10 semanas</li>
+            <li>Comprometimento: 4–6 horas/semana</li>
+            <li>Suporte: mentoria 1:1, workshops e servers</li>
+          </ul>
         </div>
 
-        <div class="row g-4">
-          <div class="col-md-6">
-            <div class="p-4 rounded bg-slate-800">
-              <p class="fst-italic text-muted">"O curso de Unity mudou minha vida! Em 6 meses já estava trabalhando em um estúdio indie."</p>
-              <strong>Ana Carolina</strong>
+        <div class="col-lg-5">
+          <!-- simple form (can post to backend) -->
+          <form action="#" method="POST" class="mt-2">
+            <div class="mb-2">
+              <label class="form-label">Nome do Projeto</label>
+              <input class="form-control bg-transparent text-white" type="text" name="project_name" required>
             </div>
+            <div class="mb-2">
+              <label class="form-label">Equipe / Autor</label>
+              <input class="form-control bg-transparent text-white" type="text" name="author" required>
+            </div>
+            <div class="mb-2">
+              <label class="form-label">Link do Protótipo (itch.io / google drive)</label>
+              <input class="form-control bg-transparent text-white" type="url" name="prototype">
+            </div>
+            <div class="mb-2">
+              <label class="form-label">Descrição curta</label>
+              <textarea class="form-control bg-transparent text-white" name="summary" rows="3" required></textarea>
+            </div>
+            <div class="d-grid">
+              <button type="submit" class="btn-primary">Enviar Inscrição</button>
+            </div>
+            <div class="muted mt-2" style="font-size:0.9rem;">Nós entraremos em contato em até 7 dias úteis após a seleção.</div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TESTIMONIALS -->
+  <section class="section">
+    <div class="card">
+      <h3>Depoimentos</h3>
+      <div class="row g-3 mt-2">
+        <div class="col-md-6">
+          <div style="padding:1rem; border-radius:8px; background:rgba(255,255,255,0.01)">
+            <p class="muted">"A mentoria do GameLab acelerou nosso desenvolvimento e nos ajudou a fechar a primeira versão do jogo."</p>
+            <strong>Equipe PixelFox</strong>
           </div>
-          <div class="col-md-6">
-            <div class="p-4 rounded bg-slate-800">
-              <p class="fst-italic text-muted">"Nunca imaginei que aprender pixel art poderia ser tão divertido. Agora consigo criar meus próprios assets profissionais!"</p>
-              <strong>Ricardo Almeida</strong>
-            </div>
+        </div>
+        <div class="col-md-6">
+          <div style="padding:1rem; border-radius:8px; background:rgba(255,255,255,0.01)">
+            <p class="muted">"Conseguimos publicar em web e teve ótimas métricas de play na primeira semana."</p>
+            <strong>Time SkyBuild</strong>
           </div>
         </div>
       </div>
-    </section>
-  </main>
+    </div>
+  </section>
 
-  <!-- Footer -->
-  <footer class="bg-slate-900 py-4 border-top border-gray-800 mt-4">
-    <div class="container text-center">
-      <p class="text-muted mb-1">&copy; 2025 GameLab — Caio Martins.</p>
-      <a href="sobre_nos.html" class="text-muted text-decoration-none">Sobre</a>
+  <!-- FAQ -->
+  <section id="faq" class="section">
+    <div class="card">
+      <h3>Perguntas Frequentes</h3>
+      <div class="faq mt-2">
+        <div class="q">Como funciona a seleção?</div>
+        <div class="a muted">Enviamos uma revisão e, se aprovado, agendamos a primeira sessão de mentoria. Preferimos protótipos simples que mostram a ideia.</div>
+
+        <div class="q">Preciso ter equipe?</div>
+        <div class="a muted">Não. Projetos solo são bem-vindos. Priorizamos dedicação e clareza do escopo.</div>
+
+        <div class="q">Há custo?</div>
+        <div class="a muted">Atualmente os ciclos de incubação são gratuitos para os selecionados (parcerias e patrocinadores podem cobrir custos).</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="container">
+      <div style="display:flex; justify-content:center; gap:1.2rem; align-items:center; margin-bottom:0.8rem;">
+        <a href="#" class="muted">Política de Privacidade</a>
+        <a href="#" class="muted">Termos</a>
+        <a href="#" class="muted">Contato</a>
+      </div>
+      <div class="muted">© 2025 GameLab — Incubadora de Projetos. Desenvolvido por você.</div>
     </div>
   </footer>
 
-  <!-- SCRIPTS -->
-
-  <!-- Bootstrap bundle (Popper + Bootstrap JS) -->
+  <!-- SCRIPTS: Bootstrap + Icones + Theme toggle -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-
-  <!-- Feather icons (inicializa ícones) -->
   <script>
+    // feather icons
     feather.replace();
-  </script>
 
-  <!-- Inicializações extras: tooltips/popovers + dark-mode toggle -->
-  <script>
-    document.addEventListener('DOMContentLoaded', function () {
-      // Tooltips & Popovers
-      var t = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
-      t.forEach(function (el) { new bootstrap.Tooltip(el); });
-      var p = [].slice.call(document.querySelectorAll('[data-bs-toggle="popover"]'));
-      p.forEach(function (el) { new bootstrap.Popover(el); });
-
-      // Theme toggle: alterna data-bs-theme no <html> (usa atributo do Bootstrap 5.3)
+    // Theme toggle (dark/light) usando data-bs-theme no <html>
+    (function(){
       const themeToggle = document.getElementById('themeToggle');
       const themeIcon = document.getElementById('themeIcon');
+      const html = document.documentElement;
 
-      themeToggle.addEventListener('click', function () {
-        const html = document.documentElement;
+      const setIcon = (mode) => {
+        themeIcon.setAttribute('data-feather', mode === 'light' ? 'sun' : 'moon');
+        feather.replace();
+      };
+
+      // carregar preferencia
+      const saved = localStorage.getItem('gamelab-theme') || 'dark';
+      html.setAttribute('data-bs-theme', saved);
+      setIcon(saved === 'light' ? 'light' : 'dark');
+
+      themeToggle.addEventListener('click', () => {
         const current = html.getAttribute('data-bs-theme') || 'dark';
         const next = current === 'light' ? 'dark' : 'light';
         html.setAttribute('data-bs-theme', next);
-
-        // trocar ícone feather (moon <-> sun)
-        if (next === 'light') {
-          themeIcon.setAttribute('data-feather', 'sun');
-        } else {
-          themeIcon.setAttribute('data-feather', 'moon');
-        }
-        feather.replace();
+        localStorage.setItem('gamelab-theme', next);
+        setIcon(next === 'light' ? 'light' : 'dark');
       });
-
-      // Ajuste: se quiser persistir preferência, salve em localStorage (exemplo simples)
-      const saved = localStorage.getItem('gamelab-theme');
-      if (saved) {
-        document.documentElement.setAttribute('data-bs-theme', saved);
-        if (saved === 'light') themeIcon.setAttribute('data-feather', 'sun');
-        else themeIcon.setAttribute('data-feather', 'moon');
-        feather.replace();
-      }
-      // salva ao trocar
-      themeToggle.addEventListener('click', function () {
-        localStorage.setItem('gamelab-theme', document.documentElement.getAttribute('data-bs-theme'));
-      });
-    });
+    })();
   </script>
-
 </body>
 </html>
