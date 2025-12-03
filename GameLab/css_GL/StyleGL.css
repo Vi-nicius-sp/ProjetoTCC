@@ -1,0 +1,209 @@
+/* =========================================================
+   GAMELAB — StyleGL.css
+   Tema gamer neon azul • Paleta fornecida por você
+   ========================================================= */
+
+/* ----------- VARIÁVEIS ----------- */
+:root {
+    --primary-color: #61dafb;
+    --primary-dark: #21a1f1;
+    --primary-light: #a6e1fa;
+
+    --bg-dark: #1e1e2f;
+    --bg-darker: #141421;
+    --bg-medium: #2a2a3d;
+    --bg-light: #3c3c55;
+
+    --text-primary: #ffffff;
+    --text-secondary: #d1d5db;
+    --text-accent: #61dafb;
+    --text-muted: #9ca3af;
+
+    --radius: 12px;
+}
+
+/* ----------- BASE ----------- */
+body {
+    font-family: 'Poppins', sans-serif;
+    background-color: var(--bg-dark);
+    color: var(--text-primary);
+    margin: 0;
+    padding: 0;
+}
+
+/* ----------- NAVBAR ----------- */
+.navbar {
+    background: var(--bg-darker);
+    padding: 1rem 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+}
+
+.logo {
+    font-size: 1.3rem;
+    color: var(--text-accent);
+    font-weight: 700;
+}
+
+.nav-links {
+    display: flex;
+    gap: 1rem;
+}
+
+.nav-link {
+    color: var(--text-secondary);
+    transition: 0.3s;
+}
+
+.nav-link:hover {
+    color: var(--primary-light);
+}
+
+/* ----------- HEADER ----------- */
+.header {
+    padding: 2rem;
+    text-align: center;
+}
+
+.header-title {
+    font-size: 2rem;
+    font-weight: 700;
+}
+
+.header-subtitle {
+    color: var(--text-muted);
+    max-width: 650px;
+    margin: 0 auto;
+}
+
+/* ----------- CONTAINER ----------- */
+.container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 1.5rem;
+}
+
+/* ----------- CARD ----------- */
+.game-card {
+    background: var(--bg-medium);
+    padding: 2rem;
+    border-radius: var(--radius);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+    margin-bottom: 3rem;
+    transition: 0.3s;
+}
+
+.game-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 16px 30px rgba(0,0,0,0.25);
+}
+
+.section-title {
+    font-size: 1.4rem;
+    margin-bottom: 1rem;
+}
+
+/* ----------- FORM ----------- */
+label {
+    font-weight: 600;
+    display: block;
+    margin-top: 1.2rem;
+    margin-bottom: 0.4rem;
+}
+
+input,
+select,
+textarea {
+    width: 100%;
+    padding: 0.75rem;
+    border-radius: var(--radius);
+    border: none;
+    background: var(--bg-light);
+    color: var(--text-primary);
+    font-size: 1rem;
+    outline: none;
+    transition: 0.2s;
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+    background: var(--bg-lighter);
+    box-shadow: 0 0 0 2px var(--primary-dark);
+}
+
+/* ----------- DIVISOR ----------- */
+.divider {
+    border: none;
+    height: 1px;
+    background: rgba(255,255,255,0.08);
+    margin: 2rem 0;
+}
+
+/* ----------- UPLOAD ----------- */
+.upload-title {
+    margin-bottom: 0.4rem;
+}
+
+.upload-subtitle {
+    color: var(--text-muted);
+    font-size: 0.9rem;
+    margin-bottom: 1rem;
+}
+
+/* ----------- GALERIA ----------- */
+.gallery {
+    margin-top: 1rem;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 1rem;
+}
+
+.preview-image {
+    width: 100%;
+    height: 160px;
+    object-fit: cover;
+    border-radius: var(--radius);
+    background: #000;
+    border: 2px solid var(--primary-dark);
+}
+
+/* ----------- BOTÃO ----------- */
+.btn-primary {
+    background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+    padding: 0.9rem 1.5rem;
+    border: none;
+    margin-top: 1.5rem;
+    border-radius: var(--radius);
+    color: #fff;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 1rem;
+    transition: 0.2s;
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 25px rgba(33,161,241,0.3);
+}
+
+/* ----------- RODAPÉ ----------- */
+.footer {
+    text-align: center;
+    padding: 2rem;
+    color: var(--text-muted);
+    font-size: 0.9rem;
+}
+
+/* ----------- RESPONSIVO ----------- */
+@media (max-width: 768px) {
+    .nav-links {
+        display: none;
+    }
+
+    .gallery {
+        grid-template-columns: 1fr 1fr;
+    }
+}
