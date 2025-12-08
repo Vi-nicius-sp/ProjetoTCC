@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>GameHub | Neon Gaming Ecosystem</title>
+
+    <!-- CSS principal do GameHub -->
+    <link rel="stylesheet" href="style_GH.css">
+
+    <!-- Tailwind (utilitário visual) -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Feather Icons -->
+    <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
+
+    <!-- Web Components -->
+    <script src="components/navbar.js"></script>
+    <script src="components/footer.js"></script>
+    <script src="components/auth-modal.js"></script>
+
+    <!-- Variáveis compatíveis com GameLab -->
+    <style>
+        :root {
+            --primary: #61dafb;
+            --secondary: #21a1f1;
+            --dark: #1e1e2f;
+            --darker: #141421;
+        }
+    </style>
+</head>
+
+<body class="bg-[var(--dark)] text-white font-sans">
+
+    <!-- NAVBAR -->
+    <custom-navbar></custom-navbar>
+
+    <main class="min-h-screen">
+
+        <!-- HERO SECTION -->
+        <section class="relative h-screen flex items-center justify-center bg-gradient-to-br from-[var(--darker)] to-[var(--dark)] overflow-hidden">
+            <div class="absolute inset-0 z-0">
+                <div class="absolute inset-0 bg-gradient-to-b from-[var(--dark)] via-transparent to-[var(--dark)]"></div>
+            </div>
+            
+            <div class="container mx-auto px-6 z-10 text-center">
+                <h1 class="text-5xl md:text-7xl font-bold mb-6 text-transparent bg-clip-text bg-gradient-to-r from-[var(--primary)] to-[var(--secondary)]">
+                    Welcome to <span class="block">GameHub</span>
+                </h1>
+
+                <p class="text-xl md:text-2xl max-w-3xl mx-auto mb-10 text-gray-300">
+                    A unified gaming ecosystem where learning, creation and discovery meet.
+                    Join GameLab, explore new games and grow with the community.
+                </p>
+
+                <div class="flex flex-col sm:flex-row justify-center gap-4">
+                    <button onclick="openAuthModal('signup')"
+                        class="px-8 py-3 bg-gradient-to-r from-[var(--primary)] to-[var(--secondary)] rounded-full font-bold hover:opacity-90 transition-all transform hover:scale-105">
+                        Join the Community
+                    </button>
+
+                    <button onclick="openAuthModal('login')"
+                        class="px-8 py-3 border-2 border-[var(--primary)] text-[var(--primary)] rounded-full font-bold hover:bg-[var(--primary)] hover:text-[var(--dark)] transition-all">
+                        Sign In
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- ECOSSISTEMA -->
+        <section class="py-20 bg-[var(--darker)]">
+            <div class="container mx-auto px-6">
+                <h2 class="text-4xl font-bold mb-16 text-center text-transparent bg-clip-text bg-gradient-to-r from-[var(--primary)] to-[var(--secondary)]">
+                    Our Ecosystem
+                </h2>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
+
+                    <!-- GAMELAB -->
+                    <div class="bg-[var(--dark)] rounded-xl overflow-hidden border border-[var(--primary)] border-opacity-30 hover:border-opacity-60 transition-all">
+                        <div class="h-48 bg-gradient-to-r from-[var(--primary)] to-[var(--secondary)] flex items-center justify-center">
+                            <i data-feather="code" class="w-16 h-16"></i>
+                        </div>
+
+                        <div class="p-8">
+                            <h3 class="text-2xl font-bold mb-4 text-[var(--primary)]">GameLab</h3>
+                            <p class="text-gray-300 mb-6">
+                                Learn and build real game projects. GameLab connects education,
+                                practice and mentorship for future developers.
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- GAMESEEK -->
+                    <div class="bg-[var(--dark)] rounded-xl overflow-hidden border border-[var(--secondary)] border-opacity-30 hover:border-opacity-60 transition-all">
+                        <div class="h-48 bg-gradient-to-r from-[var(--secondary)] to-[var(--primary)] flex items-center justify-center">
+                            <i data-feather="search" class="w-16 h-16"></i>
+                        </div>
+
+                        <div class="p-8">
+                            <h3 class="text-2xl font-bold mb-4 text-[var(--secondary)]">GameSeek</h3>
+                            <p class="text-gray-300 mb-6">
+                                Discover indie games, rankings and innovative projects created
+                                by the community.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CTA FINAL -->
+        <section class="py-20 bg-gradient-to-br from-[var(--darker)] to-[var(--dark)]">
+            <div class="container mx-auto px-6 text-center">
+                <h2 class="text-4xl font-bold mb-6 text-transparent bg-clip-text bg-gradient-to-r from-[var(--primary)] to-[var(--secondary)]">
+                    Start Your Journey with GameHub
+                </h2>
+
+                <p class="text-xl text-gray-300 max-w-2xl mx-auto mb-10">
+                    Learn, create and publish. GameHub is the bridge between gamers and developers.
+                </p>
+
+                <button onclick="openAuthModal('signup')"
+                    class="px-8 py-3 bg-gradient-to-r from-[var(--primary)] to-[var(--secondary)] rounded-full font-bold hover:opacity-90 transition-all transform hover:scale-105">
+                    Create Your Account
+                </button>
+            </div>
+        </section>
+    </main>
+
+    <!-- FOOTER + MODAL -->
+    <custom-footer></custom-footer>
+    <custom-auth-modal></custom-auth-modal>
+
+    <!-- ABRIR MODAL -->
+    <script>
+        function openAuthModal(mode) {
+            const modal = document.querySelector('custom-auth-modal');
+            modal.setAttribute('mode', mode);
+            modal.setAttribute('visible', 'true');
+        }
+    </script>
+
+    <!-- Icons -->
+    <script>feather.replace();</script>
+
+    <!-- Script principal do GameHub -->
+    <script src="Script_GH.js"></script>
+</body>
+</html>

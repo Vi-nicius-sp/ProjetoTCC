@@ -1,0 +1,111 @@
+/* =========================================================
+   style_GH.css
+   Tema GameHub / GameLab — Neon Gamer Azul
+   Compatível com StyleGL.css
+   ========================================================= */
+
+/* ----------- FONT ----------- */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+/* ----------- RESET ----------- */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+/* ----------- BASE ----------- */
+body {
+    font-family: 'Inter', 'Poppins', sans-serif;
+    scroll-behavior: smooth;
+    background-color: var(--bg-dark);
+    color: var(--text-primary);
+}
+
+/* ----------- SCROLLBAR CUSTOM ----------- */
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--bg-darker);
+}
+
+::-webkit-scrollbar-thumb {
+    background: linear-gradient(
+        180deg,
+        var(--primary-color),
+        var(--primary-dark)
+    );
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--primary-dark);
+}
+
+/* ----------- ANIMAÇÕES ----------- */
+@keyframes pulse {
+    0%, 100% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0.5;
+    }
+}
+
+.animate-pulse {
+    animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+@keyframes float {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-10px);
+    }
+}
+
+.animate-float {
+    animation: float 6s ease-in-out infinite;
+}
+
+/* ----------- NEON GLOW ----------- */
+.neon-glow {
+    text-shadow:
+        0 0 6px rgba(97, 218, 251, 0.8),
+        0 0 14px rgba(97, 218, 251, 0.6),
+        0 0 24px rgba(33, 161, 241, 0.4);
+}
+
+.neon-glow-secondary {
+    text-shadow:
+        0 0 6px rgba(166, 225, 250, 0.7),
+        0 0 14px rgba(97, 218, 251, 0.5),
+        0 0 22px rgba(33, 161, 241, 0.35);
+}
+
+/* ----------- TEXTO EM GRADIENTE ----------- */
+.gradient-text {
+    background: linear-gradient(
+        90deg,
+        var(--primary-light),
+        var(--primary-color),
+        var(--primary-dark)
+    );
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
+}
+
+/* ----------- UTILITÁRIOS VISUAIS ----------- */
+.glass-effect {
+    background: rgba(42, 42, 61, 0.65);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.soft-shadow {
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.35);
+}
