@@ -1,11 +1,252 @@
 <!DOCTYPE html>
-<html lang="en">
+<!-- Define o tipo do documento como HTML5 -->
+<html lang="pt-BR">
+<!-- Define o idioma da página como português -->
+
 <head>
+    <!-- Define a codificação de caracteres -->
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <link rel="stylesheet" href="Jogos.css">
+    <!-- Título da aba do navegador -->
+    <title>GameSeek | Mini Games</title>
 </head>
+
 <body>
-    <!-- FAZER A PAGINA DE JOGOS JUNTO COM COLOCAR JOGOS DE EXEMPLO, FAZER COM JS... UM JOGO DA VELHA, FORCA, ETC..  -->
+
+<!-- ================= CABEÇALHO DO SITE ================= -->
+<header>
+    <!-- Título principal da página -->
+    <h1>GameSeek Mini Games</h1>
+
+    <!-- Descrição simples -->
+    <p>Jogos clássicos desenvolvidos em JavaScript</p>
+</header>
+
+<!-- ================= ÁREA DOS JOGOS ================= -->
+<section>
+
+    <!-- ========== JOGO DA COBRINHA ========== -->
+    <div>
+        <!-- Título do jogo -->
+        <h2>Jogo da Cobrinha</h2>
+
+        <!-- Canvas usado para desenhar o jogo da cobrinha -->
+        <canvas id="snake" width="300" height="300"></canvas>
+
+        <!-- Instruções de controle -->
+        <p>Use as setas do teclado</p>
+    </div>
+
+    <!-- ========== JOGO DA FORCA ========== -->
+    <div>
+        <!-- Título do jogo -->
+        <h2>Jogo da Forca</h2>
+
+        <!-- Palavra exibida com traços -->
+        <p id="word"></p>
+
+        <!-- Campo para o jogador digitar uma letra -->
+        <input id="letter" maxlength="1">
+
+        <!-- Botão que chama a função de tentativa -->
+        <button onclick="guess()">Tentar</button>
+
+        <!-- Mensagem de vitória -->
+        <p id="forcaMsg"></p>
+    </div>
+
+    <!-- ========== JOGO DA VELHA ========== -->
+    <div>
+        <!-- Título do jogo -->
+        <h2>Jogo da Velha</h2>
+
+        <!-- Tabuleiro será criado via JavaScript -->
+        <div id="board"></div>
+
+        <!-- Exibe o vencedor -->
+        <p id="winner"></p>
+    </div>
+
+</section>
+
+<!-- ================= JAVASCRIPT ================= -->
+<script>
+
+    /* =====================================================
+       JOGO DA COBRINHA
+       ===================================================== */
+
+    // Seleciona o canvas pelo ID
+    const canvas = document.getElementById("snake");
+
+    // Obtém o contexto 2D para desenhar no canvas
+    const ctx = canvas.getContext("2d");
+
+    // Array que representa o corpo da cobrinha
+    let snake = [{ x: 10, y: 10 }];
+
+    // Posição inicial da comida
+    let food = { x: 5, y: 5 };
+
+    // Direção do movimento (dx, dy)
+    let dx = 0;
+    let dy = 0;
+
+    // Escuta eventos de tecla pressionada
+    document.addEventListener("keydown", event => {
+
+        // Define a direção conforme a tecla pressionada
+        if (event.key === "ArrowUp") {
+            dx = 0;
+            dy = -1;
+        }
+
+        if (event.key === "ArrowDown") {
+            dx = 0;
+            dy = 1;
+        }
+
+        if (event.key === "ArrowLeft") {
+            dx = -1;
+            dy = 0;
+        }
+
+        if (event.key === "ArrowRight") {
+            dx = 1;
+            dy = 0;
+        }
+    });
+
+    // Função principal do jogo da cobrinha
+    function snakeGame() {
+
+        // Limpa a tela do canvas
+        ctx.clearRect(0, 0, 300, 300);
+
+        // Cria uma nova cabeça baseada na direção
+        const head = {
+            x: snake[0].x + dx,
+            y: snake[0].y + dy
+        };
+
+        // Adiciona a nova cabeça no início do array
+        snake.unshift(head);
+
+        // Verifica se a cobrinha comeu a comida
+        if (head.x === food.x && head.y === food.y) {
+
+            // Gera nova posição aleatória para a comida
+            food = {
+                x: Math.floor(Math.random() * 15),
+                y: Math.floor(Math.random() * 15)
+            };
+
+        } else {
+            // Remove o último bloco se não comeu
+            snake.pop();
+        }
+
+        // Desenha a comida
+        ctx.fillStyle = "red";
+        ctx.fillRect(food.x * 20, food.y * 20, 20, 20);
+
+        // Desenha a cobrinha
+        ctx.fillStyle = "blue";
+        snake.forEach(part => {
+            ctx.fillRect(part.x * 20, part.y * 20, 20, 20);
+        });
+    }
+
+    // Executa o jogo a cada 150 milissegundos
+    setInterval(snakeGame, 150);
+
+    /* =====================================================
+       JOGO DA FORCA
+       ===================================================== */
+
+    // Lista de palavras possíveis
+    const words = ["JAVASCRIPT", "GAMESEEK", "PROGRAMACAO"];
+
+    // Escolhe uma palavra aleatória
+    let chosen = words[Math.floor(Math.random() * words.length)];
+
+    // Cria o array de letras ocultas
+    let display = Array(chosen.length).fill("_");
+
+    // Mostra a palavra inicial com traços
+    document.getElementById("word").innerText = display.join(" ");
+
+    // Função chamada ao clicar no botão
+    function guess() {
+
+        // Captura a letra digitada
+        const letterInput = document.getElementById("letter");
+        const letter = letterInput.value.toUpperCase();
+
+        // Limpa o campo de input
+        letterInput.value = "";
+
+        // Verifica se a letra está na palavra
+        if (chosen.includes(letter)) {
+
+            // Substitui os traços pela letra correta
+            [...chosen].forEach((char, index) => {
+                if (char === letter) {
+                    display[index] = letter;
+                }
+            });
+        }
+
+        // Atualiza a palavra exibida
+        document.getElementById("word").innerText = display.join(" ");
+
+        // Verifica se o jogador venceu
+        if (!display.includes("_")) {
+            document.getElementById("forcaMsg").innerText = "Você venceu!";
+        }
+    }
+
+    /* =====================================================
+       JOGO DA VELHA
+       ===================================================== */
+
+    // Seleciona a div do tabuleiro
+    const board = document.getElementById("board");
+
+    // Cria o estado do tabuleiro (9 posições)
+    let cells = Array(9).fill("");
+
+    // Define o jogador atual
+    let currentPlayer = "X";
+
+    // Cria as 9 casas do tabuleiro
+    cells.forEach((_, index) => {
+
+        // Cria uma div para cada casa
+        const cell = document.createElement("div");
+
+        // Define o clique da casa
+        cell.onclick = () => play(index, cell);
+
+        // Adiciona a casa ao tabuleiro
+        board.appendChild(cell);
+    });
+
+    // Função para jogada
+    function play(index, cellElement) {
+
+        // Impede sobrescrever uma casa preenchida
+        if (cells[index] !== "") return;
+
+        // Marca a casa com o símbolo do jogador
+        cells[index] = currentPlayer;
+        cellElement.innerText = currentPlayer;
+
+        // Alterna o jogador
+        currentPlayer = currentPlayer === "X" ? "O" : "X";
+    }
+
+</script>
+
 </body>
 </html>

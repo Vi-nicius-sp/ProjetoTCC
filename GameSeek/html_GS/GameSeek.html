@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GameSeek | Descubra Jogos Incríveis</title>
+    <link rel="stylesheet" href="style_GS.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
+    <script src="https://unpkg.com/feather-icons"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        primary: {
+                            500: '#00f0ff',
+                            600: '#00c4d1',
+                        },
+                        secondary: {
+                            500: '#7b2cbf',
+                            600: '#5a189a',
+                        },
+                        dark: {
+                            900: '#0a0e17',
+                            800: '#121a2a',
+                            700: '#1a263d',
+                        }
+                    },
+                    boxShadow: {
+                        'glow': '0 0 15px rgba(0, 240, 255, 0.5)',
+                        'glow-md': '0 0 20px rgba(0, 240, 255, 0.7)',
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-dark-900 text-gray-100 font-sans antialiased">
+    <custom-navbar></custom-navbar>
+    
+    <main class="container mx-auto px-4 py-8">
+        <!-- Hero Section -->
+        <section class="relative overflow-hidden rounded-xl mb-12">
+            <div class="absolute inset-0 bg-gradient-to-r from-dark-900 via-primary-500/20 to-dark-900 z-0"></div>
+            <div class="relative z-10 p-8 md:p-12 lg:p-16">
+                <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold mb-4 text-transparent bg-clip-text bg-gradient-to-r from-primary-500 to-secondary-500">
+                    Descubra Jogos Incríveis
+                </h1>
+                <p class="text-xl md:text-2xl mb-8 max-w-2xl">
+                    A plataforma definitiva para encontrar os melhores jogos independentes e em desenvolvimento.
+                </p>
+                <div class="flex flex-wrap gap-4">
+                    <a href="#" class="px-6 py-3 bg-primary-500 hover:bg-primary-600 rounded-lg font-medium text-dark-900 transition-all duration-300 shadow-glow hover:shadow-glow-md">
+                        Explorar Jogos
+                    </a>
+                    <a href="#" class="px-6 py-3 border border-primary-500 hover:bg-primary-500/10 rounded-lg font-medium transition-all duration-300">
+                        Criar Conta
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Featured Games -->
+        <section class="mb-16">
+            <div class="flex justify-between items-center mb-6">
+                <h2 class="text-2xl md:text-3xl font-bold flex items-center gap-2">
+                    <i data-feather="star" class="text-primary-500"></i>
+                    Destaques
+                </h2>
+                <a href="#" class="text-primary-500 hover:text-primary-400 flex items-center gap-1">
+                    Ver todos <i data-feather="chevron-right" class="w-4 h-4"></i>
+                </a>
+            </div>
+            
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                <!-- Game Card 1 -->
+                <div class="bg-dark-800 rounded-xl overflow-hidden transition-all duration-300 hover:shadow-glow hover:-translate-y-1">
+                    <div class="relative">
+                        <img src="http://static.photos/gaming/640x360/1" alt="Game Cover" class="w-full h-48 object-cover">
+                        <div class="absolute top-2 right-2 bg-dark-900/80 text-primary-500 px-2 py-1 rounded-md text-sm font-medium">
+                            RPG
+                        </div>
+                    </div>
+                    <div class="p-4">
+                        <h3 class="text-xl font-bold mb-2">Neon Chronicles</h3>
+                        <p class="text-gray-400 text-sm mb-4">Uma aventura cyberpunk cheia de ação e escolhas impactantes.</p>
+                        <div class="flex justify-between items-center">
+                            <div class="flex items-center gap-1 text-yellow-400">
+                                <i data-feather="star" class="w-4 h-4 fill-current"></i>
+                                <span>4.8</span>
+                            </div>
+                            <a href="#" class="text-primary-500 hover:text-primary-400 text-sm font-medium">
+                                Detalhes
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Game Card 2 -->
+                <div class="bg-dark-800 rounded-xl overflow-hidden transition-all duration-300 hover:shadow-glow hover:-translate-y-1">
+                    <div class="relative">
+                        <img src="http://static.photos/gaming/640x360/2" alt="Game Cover" class="w-full h-48 object-cover">
+                        <div class="absolute top-2 right-2 bg-dark-900/80 text-primary-500 px-2 py-1 rounded-md text-sm font-medium">
+                            Ação
+                        </div>
+                    </div>
+                    <div class="p-4">
+                        <h3 class="text-xl font-bold mb-2">Quantum Rush</h3>
+                        <p class="text-gray-400 text-sm mb-4">Corrida futurista com mecânicas de teletransporte.</p>
+                        <div class="flex justify-between items-center">
+                            <div class="flex items-center gap-1 text-yellow-400">
+                                <i data-feather="star" class="w-4 h-4 fill-current"></i>
+                                <span>4.5</span>
+                            </div>
+                            <a href="#" class="text-primary-500 hover:text-primary-400 text-sm font-medium">
+                                Detalhes
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Game Card 3 -->
+                <div class="bg-dark-800 rounded-xl overflow-hidden transition-all duration-300 hover:shadow-glow hover:-translate-y-1">
+                    <div class="relative">
+                        <img src="http://static.photos/gaming/640x360/3" alt="Game Cover" class="w-full h-48 object-cover">
+                        <div class="absolute top-2 right-2 bg-dark-900/80 text-primary-500 px-2 py-1 rounded-md text-sm font-medium">
+                            Puzzle
+                        </div>
+                    </div>
+                    <div class="p-4">
+                        <h3 class="text-xl font-bold mb-2">Lumina</h3>
+                        <p class="text-gray-400 text-sm mb-4">Resolva quebra-cabeças de luz em um mundo misterioso.</p>
+                        <div class="flex justify-between items-center">
+                            <div class="flex items-center gap-1 text-yellow-400">
+                                <i data-feather="star" class="w-4 h-4 fill-current"></i>
+                                <span>4.9</span>
+                            </div>
+                            <a href="#" class="text-primary-500 hover:text-primary-400 text-sm font-medium">
+                                Detalhes
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Game Card 4 -->
+                <div class="bg-dark-800 rounded-xl overflow-hidden transition-all duration-300 hover:shadow-glow hover:-translate-y-1">
+                    <div class="relative">
+                        <img src="http://static.photos/gaming/640x360/4" alt="Game Cover" class="w-full h-48 object-cover">
+                        <div class="absolute top-2 right-2 bg-dark-900/80 text-primary-500 px-2 py-1 rounded-md text-sm font-medium">
+                            Estratégia
+                        </div>
+                    </div>
+                    <div class="p-4">
+                        <h3 class="text-xl font-bold mb-2">Stellar Command</h3>
+                        <p class="text-gray-400 text-sm mb-4">Construa seu império interestelar e domine a galáxia.</p>
+                        <div class="flex justify-between items-center">
+                            <div class="flex items-center gap-1 text-yellow-400">
+                                <i data-feather="star" class="w-4 h-4 fill-current"></i>
+                                <span>4.7</span>
+                            </div>
+                            <a href="#" class="text-primary-500 hover:text-primary-400 text-sm font-medium">
+                                Detalhes
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Rankings Section -->
+        <section class="mb-16">
+            <div class="flex justify-between items-center mb-6">
+                <h2 class="text-2xl md:text-3xl font-bold flex items-center gap-2">
+                    <i data-feather="award" class="text-primary-500"></i>
+                    Rankings
+                </h2>
+                <a href="#" class="text-primary-500 hover:text-primary-400 flex items-center gap-1">
+                    Ver todos <i data-feather="chevron-right" class="w-4 h-4"></i>
+                </a>
+            </div>
+            
+            <div class="bg-dark-800 rounded-xl p-6">
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <!-- Top Rated -->
+                    <div>
+                        <h3 class="text-lg font-bold mb-4 flex items-center gap-2">
+                            <i data-feather="star" class="text-yellow-400"></i>
+                            Melhores Avaliados
+                        </h3>
+                        <ul class="space-y-3">
+                            <li class="flex items-center gap-3 p-2 rounded-lg hover:bg-dark-700 transition-colors">
+                                <span class="text-primary-500 font-bold">1</span>
+                                <span>Neon Chronicles</span>
+                                <span class="ml-auto text-yellow-400">4.8</span>
+                            </li>
+                            <li class="flex items-center gap-3 p-2 rounded-lg hover:bg-dark-700 transition-colors">
+                                <span class="text-primary-500 font-bold">2</span>
+                                <span>Lumina</span>
+                                <span class="ml-auto text-yellow-400">4.9</span>
+                            </li>
+                            <li class="flex items-center gap-3 p-2 rounded-lg hover:bg-dark-700 transition-colors">
+                                <span class="text-primary-500 font-bold">3</span>
+                                <span>Stellar Command</span>
+                                <span class="ml-auto text-yellow-400">4.7</span>
+                            </li>
+                        </ul>
+                    </div>
+                    
+                    <!-- Most Popular -->
+                    <div>
+                        <h3 class="text-lg font-bold mb-4 flex items-center gap-2">
+                            <i data-feather="trending-up" class="text-primary-500"></i>
+                            Mais Populares
+                        </h3>
+                        <ul class="space-y-3">
+                            <li class="flex items-center gap-3 p-2 rounded-lg hover:bg-dark-700 transition-colors">
+                                <span class="text-primary-500 font-bold">1</span>
+                                <span>Quantum Rush</span>
+                                <span class="ml-auto text-gray-400">1.2M views</span>
+                            </li>
+                            <li class="flex items-center gap-3 p-2 rounded-lg hover:bg-dark-700 transition-colors">
+                                <span class="text-primary-500 font-bold">2</span>
+                                <span>Neon Chronicles</span>
+                                <span class="ml-auto text-gray-400">980K views</span>
+                            </li>
+                            <li class="flex items-center gap-3 p-2 rounded-lg hover:bg-dark-700 transition-colors">
+                                <span class="text-primary-500 font-bold">3</span>
+                                <span>Stellar Command</span>
+                                <span class="ml-auto text-gray-400">750K views</span>
+                            </li>
+                        </ul>
+                    </div>
+                    
+                    <!-- New Releases -->
+                    <div>
+                        <h3 class="text-lg font-bold mb-4 flex items-center gap-2">
+                            <i data-feather="clock" class="text-primary-500"></i>
+                            Lançamentos
+                        </h3>
+                        <ul class="space-y-3">
+                            <li class="flex items-center gap-3 p-2 rounded-lg hover:bg-dark-700 transition-colors">
+                                <span class="text-primary-500 font-bold">1</span>
+                                <span>Lumina</span>
+                                <span class="ml-auto text-gray-400">2 dias</span>
+                            </li>
+                            <li class="flex items-center gap-3 p-2 rounded-lg hover:bg-dark-700 transition-colors">
+                                <span class="text-primary-500 font-bold">2</span>
+                                <span>Quantum Rush</span>
+                                <span class="ml-auto text-gray-400">1 semana</span>
+                            </li>
+                            <li class="flex items-center gap-3 p-2 rounded-lg hover:bg-dark-700 transition-colors">
+                                <span class="text-primary-500 font-bold">3</span>
+                                <span>Neon Chronicles</span>
+                                <span class="ml-auto text-gray-400">2 semanas</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- News Section -->
+        <section class="mb-16">
+            <div class="flex justify-between items-center mb-6">
+                <h2 class="text-2xl md:text-3xl font-bold flex items-center gap-2">
+                    <i data-feather="bookmark" class="text-primary-500"></i>
+                    Notícias
+                </h2>
+                <a href="#" class="text-primary-500 hover:text-primary-400 flex items-center gap-1">
+                    Ver todas <i data-feather="chevron-right" class="w-4 h-4"></i>
+                </a>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- News 1 -->
+                <div class="bg-dark-800 rounded-xl overflow-hidden transition-all duration-300 hover:shadow-glow">
+                    <img src="http://static.photos/gaming/640x360/5" alt="News Image" class="w-full h-48 object-cover">
+                    <div class="p-4">
+                        <div class="flex items-center gap-2 text-sm text-gray-400 mb-2">
+                            <span>Ontem</span>
+                            <span>•</span>
+                            <span>Notícias</span>
+                        </div>
+                        <h3 class="text-xl font-bold mb-2">Neon Chronicles anuncia expansão</h3>
+                        <p class="text-gray-400 mb-4">O aclamado RPG cyberpunk terá uma nova expansão com mais 10 horas de conteúdo.</p>
+                        <a href="#" class="text-primary-500 hover:text-primary-400 font-medium flex items-center gap-1">
+                            Ler mais <i data-feather="arrow-right" class="w-4 h-4"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- News 2 -->
+                <div class="bg-dark-800 rounded-xl overflow-hidden transition-all duration-300 hover:shadow-glow">
+                    <img src="http://static.photos/gaming/640x360/6" alt="News Image" class="w-full h-48 object-cover">
+                    <div class="p-4">
+                        <div class="flex items-center gap-2 text-sm text-gray-400 mb-2">
+                            <span>3 dias atrás</span>
+                            <span>•</span>
+                            <span>Eventos</span>
+                        </div>
+                        <h3 class="text-xl font-bold mb-2">GameSeek Awards 2023</h3>
+                        <p class="text-gray-400 mb-4">Confira os indicados ao prêmio de melhor jogo independente do ano.</p>
+                        <a href="#" class="text-primary-500 hover:text-primary-400 font-medium flex items-center gap-1">
+                            Ler mais <i data-feather="arrow-right" class="w-4 h-4"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- News 3 -->
+                <div class="bg-dark-800 rounded-xl overflow-hidden transition-all duration-300 hover:shadow-glow">
+                    <img src="http://static.photos/gaming/640x360/7" alt="News Image" class="w-full h-48 object-cover">
+                    <div class="p-4">
+                        <div class="flex items-center gap-2 text-sm text-gray-400 mb-2">
+                            <span>1 semana atrás</span>
+                            <span>•</span>
+                            <span>Desenvolvimento</span>
+                        </div>
+                        <h3 class="text-xl font-bold mb-2">Novo motor gráfico para indies</h3>
+                        <p class="text-gray-400 mb-4">Conheça o novo motor gráfico que promete revolucionar o desenvolvimento de jogos independentes.</p>
+                        <a href="#" class="text-primary-500 hover:text-primary-400 font-medium flex items-center gap-1">
+                            Ler mais <i data-feather="arrow-right" class="w-4 h-4"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <custom-footer></custom-footer>
+
+    <script src="js_GH/navbar.js"></script>
+    <script src="js_GH/footer.js"></script>
+    <script src="gameseek.js"></script>
+    <script>feather.replace();</script>
+</body>
+</html>

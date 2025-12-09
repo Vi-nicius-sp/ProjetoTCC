@@ -1,0 +1,213 @@
+/* =========================================================
+   GAMESEEK — jogo.css
+   Tema Gamer Neon Azul • Moderno • Futurista
+   ========================================================= */
+
+/* ================= IMPORTAÇÃO DE FONTE ================= */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+/* ================= VARIÁVEIS DE TEMA ================= */
+:root {
+    --primary: #00f0ff;
+    --primary-hover: #00c4d1;
+    --primary-glow: rgba(0, 240, 255, 0.45);
+
+    --bg-dark: #0a0e17;
+    --bg-medium: #141a2a;
+    --bg-card: #1a2238;
+
+    --text-primary: #ffffff;
+    --text-secondary: #a6b0cf;
+    --text-muted: #6b7280;
+
+    --border-radius: 14px;
+}
+
+/* ================= RESET BÁSICO ================= */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* ================= BODY ================= */
+body {
+    font-family: 'Inter', sans-serif;
+    background: radial-gradient(circle at top, #141a2a, #0a0e17);
+    color: var(--text-primary);
+    min-height: 100vh;
+    line-height: 1.6;
+}
+
+/* ================= SCROLLBAR CUSTOM ================= */
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--bg-dark);
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--primary);
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--primary-hover);
+}
+
+/* ================= HEADER ================= */
+header {
+    padding: 3rem 2rem;
+    text-align: center;
+}
+
+header h1 {
+    font-size: 2.4rem;
+    font-weight: 700;
+    background: linear-gradient(135deg, #00f0ff, #38bdf8);
+    -webkit-background-clip: text;
+    color: transparent;
+}
+
+header p {
+    margin-top: 0.6rem;
+    color: var(--text-secondary);
+}
+
+/* ================= SEÇÃO DE JOGOS ================= */
+section {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 2rem;
+}
+
+/* ================= CARDS ================= */
+section > div {
+    background: linear-gradient(180deg, var(--bg-card), var(--bg-medium));
+    border-radius: var(--border-radius);
+    padding: 1.8rem;
+    box-shadow: 0 20px 45px rgba(0, 0, 0, 0.45);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+section > div:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 30px 60px rgba(0, 240, 255, 0.15);
+}
+
+/* ================= TÍTULOS DOS JOGOS ================= */
+h2 {
+    text-align: center;
+    margin-bottom: 1rem;
+    font-size: 1.4rem;
+    color: var(--primary);
+}
+
+/* ================= CANVAS (COBRINHA) ================= */
+canvas {
+    display: block;
+    margin: 0 auto 1rem;
+    border-radius: var(--border-radius);
+    background: #000;
+    border: 2px solid var(--primary);
+    box-shadow: 0 0 25px var(--primary-glow);
+}
+
+/* ================= FORCA ================= */
+#word {
+    text-align: center;
+    letter-spacing: 8px;
+    font-size: 1.4rem;
+    margin-bottom: 1rem;
+}
+
+input {
+    width: 100%;
+    padding: 0.7rem;
+    border-radius: var(--border-radius);
+    border: none;
+    background: #0e1424;
+    color: var(--text-primary);
+    outline: none;
+    margin-bottom: 0.6rem;
+}
+
+input:focus {
+    box-shadow: 0 0 0 2px var(--primary);
+}
+
+button {
+    width: 100%;
+    background: linear-gradient(135deg, #00f0ff, #00c4d1);
+    border: none;
+    padding: 0.7rem;
+    border-radius: var(--border-radius);
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    color: #000;
+}
+
+button:hover {
+    box-shadow: 0 0 20px var(--primary-glow);
+    transform: translateY(-2px);
+}
+
+/* ================= JOGO DA VELHA ================= */
+#board {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+    max-width: 260px;
+    margin: 0 auto;
+}
+
+#board div {
+    aspect-ratio: 1;
+    background: #0e1424;
+    border-radius: var(--border-radius);
+    font-size: 2.2rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    transition: background 0.3s ease, transform 0.2s ease;
+}
+
+#board div:hover {
+    background: #1f2a44;
+    transform: scale(1.05);
+}
+
+/* ================= TEXTO DE FEEDBACK ================= */
+p {
+    text-align: center;
+    color: var(--text-secondary);
+}
+
+/* ================= ANIMAÇÕES ================= */
+@keyframes pulse {
+    0%, 100% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0.7;
+    }
+}
+
+.animate-pulse {
+    animation: pulse 2s infinite;
+}
+
+/* ================= RESPONSIVO ================= */
+@media (max-width: 768px) {
+    header h1 {
+        font-size: 2rem;
+    }
+}
