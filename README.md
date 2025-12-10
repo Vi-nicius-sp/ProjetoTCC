@@ -75,8 +75,9 @@ Este projeto é distribuído sob a **Licença MIT**, permitindo uso, modificaç�
 
 ---
 
-## 👨‍💻 Autor
+## 👨‍💻 Documentado por
 
 **Vinicius Pereira de Araujo**  
 Projeto desenvolvido como Trabalho de Conclusão de Curso (TCC)
+
 
